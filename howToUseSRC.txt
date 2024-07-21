@@ -1,0 +1,56 @@
+How ContentPack.txt works:
+1.  Source name
+2.  Module name
+3...Description
+%$
+4...Machines (names)
+    Machines.png
+%$
+5...Items
+    Items.png
+    Recipe...
+        Recipe name
+        Machine
+        Quantity (per craft)
+        Time (seconds)
+        Cost (Used in ores, for others it's equals to zero)
+        Ingredient names...
+        ...
+%$
+    ...
+%$
+6...Machines (recipes)
+    Volume X, Y, Z
+    Recipe...
+        Ingredient names...
+        ...
+%$
+%$ END OF FILE
+
+
+
+Item cost for ores:
+amount of:
+    Iron - 8970
+    Limestone - 5820
+    Coal - 3600
+    Copper - 3390
+    Oil - 3420
+    Catherium - 1500
+    Raw Quartz - 1260
+    Bauxite - 1230
+    Sulfur - 810
+    S.A.M. - 720
+    Uranium - 210
+cost of:
+    Iron - 8970/8970        = 100
+    Limestone - 8970/5820   = 154
+    Coal - 8970/3600        = 249
+    Copper - 8970/3390      = 265
+    Oil - 8970/3420         = 262
+    Catherium - 8970/1500   = 598
+    Raw Quartz - 8970/1260  = 712
+    Bauxite - 8970/1230     = 729
+    Sulfur - 8970/810       = 1107
+    S.A.M. - 8970/720       = 1246
+    Uranium - 8970/210      = 4271

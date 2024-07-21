@@ -1,0 +1,2190 @@
+Satisfactory
+Vanilla
+%$
+Miner Mk.1
+MinerMk1.png
+Miner Mk.2
+MinerMk2.png
+Miner Mk.3
+MinerMk3.png
+Oil Extractor
+OilExtractor.png
+Water Pump
+Waterpump.png
+Resourse Well Pressurizer
+ResourseWellPressurizer.png
+Resourse Well Extractor
+ResourseWellExtractor.png
+Smelter
+Smelter.png
+Foundry
+Foundry.png
+Constructor
+Constructor.png
+Assembler
+Assembler.png
+Manufacturer
+Manufacturer.png
+Refinery
+Refinery.png
+Packager
+Packager.png
+Blender
+Blender.png
+Particle Accelerator
+ParticleAccelerator.png
+%$
+Leaves
+Leaves.png
+%$
+Mycelia
+Mycelia.png
+%$
+Wood
+Wood.png
+%$
+Alien Protein
+AlienProtein.png
+%$
+Alien DNA Capsule
+AlienDNA.png
+Alien DNA Capsule
+Constructor
+1
+6
+0
+%$
+Alien Protein
+1
+%$
+%$
+Biomass
+Biomass_Final.png
+Biomass (Alien Protein)
+Constructor
+100
+4
+0
+%$
+Alien Protein
+1
+%$
+Biomass (Leaves)
+Constructor
+5
+5
+0
+%$
+Leaves
+10
+%$
+Biomass (Mycelia)
+Constructor
+10
+4
+0
+%$
+Mycelia
+1
+%$
+Biomass (Wood)
+Constructor
+20
+4
+0
+%$
+Wood
+4
+%$
+%$
+Solid Biofuel
+SolidBiofuel.png
+Solid Biofuel
+Constructor
+4
+4
+0
+%$
+Biomass
+8
+%$
+%$
+Iron Ore
+IronOre.png
+Iron Mining Mk.1
+Miner Mk.1
+1
+1
+100
+%$
+%$
+Iron Mining Mk.2
+Miner Mk.2
+1
+0.5
+100
+%$
+%$
+Iron Mining Mk.3
+Miner Mk.3
+1
+0.25
+100
+%$
+%$
+%$
+Limestone
+Limestone.png
+Limestone Mining Mk.1
+Miner Mk.1
+1
+1
+154
+%$
+%$
+Limestone Mining Mk.2
+Miner Mk.2
+1
+0.5
+154
+%$
+%$
+Limestone Mining Mk.3
+Miner Mk.3
+1
+0.25
+154
+%$
+%$
+%$
+Coal
+CoalOre.png
+Coal Mining Mk.1
+Miner Mk.1
+1
+1
+249
+%$
+%$
+Coal Mining Mk.2
+Miner Mk.2
+1
+0.5
+249
+%$
+%$
+Coal Mining Mk.3
+Miner Mk.3
+1
+0.25
+249
+%$
+%$
+%$
+Copper Ore
+CopperOre.png
+Copper Mining Mk.1
+Miner Mk.1
+1
+1
+265
+%$
+%$
+Copper Mining Mk.2
+Miner Mk.2
+1
+0.5
+265
+%$
+%$
+Copper Mining Mk.3
+Miner Mk.3
+1
+0.25
+265
+%$
+%$
+%$
+Crude Oil
+LiquidOil_Pipe.png
+Oil Extration
+Oil Extractor
+1
+0.5
+262
+%$
+%$
+Oil Well Extraction
+Resourse Well Extractor
+1
+1
+1246
+%$
+%$
+%$
+Caterium Ore
+CateriumOre.png
+Caterium Mining Mk.1
+Miner Mk.1
+1
+1
+598
+%$
+%$
+Caterium Mining Mk.2
+Miner Mk.2
+1
+0.5
+598
+%$
+%$
+Caterium Mining Mk.3
+Miner Mk.3
+1
+0.25
+598
+%$
+%$
+%$
+Raw Quartz
+QuartzCrystal.png
+Quartz Mining Mk.1
+Miner Mk.1
+1
+1
+712
+%$
+%$
+Quartz Mining Mk.2
+Miner Mk.2
+1
+0.5
+712
+%$
+%$
+Quartz Mining Mk.3
+Miner Mk.3
+1
+0.25
+712
+%$
+%$
+%$
+Bauxite
+Bauxite.png
+Bauxite Mining Mk.1
+Miner Mk.1
+1
+1
+729
+%$
+%$
+Bauxite Mining Mk.2
+Miner Mk.2
+1
+0.5
+729
+%$
+%$
+Bauxite Mining Mk.3
+Miner Mk.3
+1
+0.25
+729
+%$
+%$
+%$
+Sulfur
+Sulfur.png
+Sulfur Mining Mk.1
+Miner Mk.1
+1
+1
+1107
+%$
+%$
+Sulfur Mining Mk.2
+Miner Mk.2
+1
+0.5
+1107
+%$
+%$
+Sulfur Mining Mk.3
+Miner Mk.3
+1
+0.25
+1107
+%$
+%$
+%$
+S.A.M. Ore
+SAMOre.png
+S.A.M. Mining Mk.1
+Miner Mk.1
+1
+1
+1246
+%$
+%$
+S.A.M. Mining Mk.2
+Miner Mk.2
+1
+0.5
+1246
+%$
+%$
+S.A.M. Mining Mk.3
+Miner Mk.3
+1
+0.25
+1246
+%$
+%$
+%$
+Uranium Ore
+UraniumOre.png
+Uranium Mining Mk.1
+Miner Mk.1
+1
+1
+4271
+%$
+%$
+Uranium Mining Mk.2
+Miner Mk.2
+1
+0.5
+4271
+%$
+%$
+Uranium Mining Mk.3
+Miner Mk.3
+1
+0.25
+4271
+%$
+%$
+%$
+Water
+LiquidWater_Pipe.png
+Water Pumpimg
+Water Pump
+1
+0.5
+1
+%$
+%$
+Water Well Extraction
+Resourse Well Extractor
+1
+1
+171
+%$
+%$
+%$
+Liquid Biofuel
+LiquidBiofuel_Pipe.png
+Liquid Biofuel
+Refinery
+4
+4
+0
+%$
+Solid Biofuel
+6
+Water
+3
+%$
+%$
+Nitrogen Gas
+NitricAcid.png
+Nitrogen Well Extraction
+Resourse Well Extractor
+1
+1
+187
+%$
+%$
+%$
+Empty Fluid Tank
+PressureTank.png
+Empty Fluid Tank
+Constructor
+1
+1
+0
+%$
+Aluminum Ingot
+1
+%$
+%$
+Packaged Nitrogen Gas
+PackagedNitrogen.png
+Packaged Nitrogen Gas
+Packager
+1
+1
+0
+%$
+Nitrogen Gas
+4
+Empty Fluid Tank
+1
+%$
+%$
+Iron Ingot
+IronIngot.png
+Iron Ingot
+Smelter
+1
+2
+0
+%$
+Iron Ore
+1
+%$
+Iron Alloy Ingot
+Foundry
+5
+6
+0
+%$
+Iron Ore
+2
+Copper Ore
+2
+%$
+Pure Iron Ingot
+Refinery
+13
+12
+0
+%$
+Iron Ore
+7
+Water
+4
+%$
+%$
+Copper Ingot
+CopperIngot.png
+Copper Ingot
+Smelter
+1
+2
+0
+%$
+Copper Ore
+1
+%$
+Copper Alloy Ingot
+Foundry
+20
+12
+0
+%$
+Copper Ore
+10
+Iron Ore
+5
+%$
+Pure Copper Ingot
+Refinery
+15
+24
+0
+%$
+Copper Ore
+6
+Water
+4
+%$
+%$
+Caterium Ingot
+CateriumIngot.png
+Caterium Ingot
+Smelter
+1
+4
+0
+%$
+Caterium Ore
+3
+%$
+Pure Caterium Ingot
+Refinery
+1
+5
+0
+%$
+Caterium Ore
+2
+Water
+2
+%$
+%$
+Polymer Resin
+PolymerResin.png
+%$
+Heavy Oil Residue
+LiquidHeavyOilResidue_Pipe.png
+Heavy Oil Residue
+Refinery
+4
+6
+0
+Polymer Resin
+2
+%$
+Crude Oil
+3
+%$
+Polymer Resin
+Refinery
+2
+6
+0
+Polymer Resin
+13
+%$
+Crude Oil
+6
+%$
+%$
+Fuel
+LiquidFuel_Pipe.png
+Fuel
+Refinery
+4
+6
+0
+Polymer Resin
+3
+%$
+Crude Oil
+6
+%$
+Diluted Fuel
+Refinery
+10
+6
+0
+%$
+Heavy Oil Residue
+5
+Water
+10
+%$
+Residual Fuel
+Refinery
+4
+6
+0
+%$
+Heavy Oil Residue
+6
+%$
+%$
+Petroleum Coke
+PetroleumCoke.png
+Petroleum Coke
+Refinery
+12
+6
+0
+%$
+Heavy Oil Residue
+4
+%$
+%$
+Compacted Coal
+CompactedCoal.png
+Compacted Coal
+Assembler
+5
+12
+0
+%$
+Coal
+5
+Sulfur
+5
+%$
+%$
+Turbofuel
+LiquidTurboFuel_Pipe.png
+Turbofuel
+Refinery
+5
+16
+0
+%$
+Fuel
+6
+Compacted Coal
+4
+%$
+Turbo Blend Fuel
+Blender
+6
+8
+0
+%$
+Fuel
+2
+Heavy Oil Residue
+4
+Sulfur
+3
+Petroleum Coke
+3
+%$
+Turbo Heavy Fuel
+Refinery
+4
+8
+0
+%$
+Heavy Oil Residue
+5
+Compacted Coal
+4
+%$
+%$
+Steel Ingot
+SteelIngot.png
+Steel Ingot
+Foundry
+3
+4
+0
+%$
+Iron Ore
+3
+Coal
+3
+%$
+Coke Steel Ingot
+Foundry
+20
+12
+0
+%$
+Iron Ore
+15
+Petroleum Coke
+15
+%$
+Compacted Steel Ingot
+Foundry
+10
+16
+0
+%$
+Iron Ore
+6
+Compacted Coal
+3
+%$
+Solid Steel Ingot
+Foundry
+3
+2
+0
+%$
+Iron Ingot
+2
+Coal
+2
+%$
+%$
+Sulfuric Acid
+LiquidSulfuricAcid_Pipe.png
+Sulfuric Acid
+Refinery
+5
+6
+0
+%$
+Sulfur
+5
+Water
+5
+%$
+%$
+Silica
+Silica.png
+Silica
+Constructor
+5
+8
+0
+%$
+Raw Quartz
+3
+%$
+Cheap Silica
+Assembler
+7
+16
+0
+%$
+Raw Quartz
+3
+Limestone
+5
+%$
+%$
+Alumina Solution
+LiquidAlumina_Pipe.png
+Alumina Solution
+Refinery
+12
+6
+0
+Silica
+5
+%$
+Bauxite
+12
+Water
+18
+%$
+Sloppy Alumina
+Refinery
+12
+3
+0
+%$
+Bauxite
+10
+Water
+10
+%$
+%$
+Aluminum Scrap
+AluminumScrap.png
+Aluminum Scrap
+Refinery
+6
+1
+0
+Water
+2
+%$
+Alumina Solution
+4
+Coal
+2
+%$
+Electrode Aluminum
+Refinery
+20
+4
+0
+Water
+7
+%$
+Alumina Solution
+12
+Petroleum Coke
+4
+%$
+Instant Scrap
+Blender
+30
+6
+0
+Water
+5
+%$
+Bauxite
+15
+Coal
+10
+Sulfuric Acid
+5
+Water
+6
+%$
+%$
+Aluminum Ingot
+AluminumIngot.png
+Aluminum Ingot
+Foundry
+4
+4
+0
+%$
+Aluminum Scrap
+6
+Silica
+5
+%$
+Pure Aluminum Ingot
+Smelter
+1
+2
+0
+%$
+Aluminum Scrap
+2
+%$
+%$
+Plastic
+Plastic.png
+Plastic
+Refinery
+2
+6
+0
+Heavy Oil Residue
+1
+%$
+Crude Oil
+3
+%$
+Recycled Plastic
+Refinery
+12
+12
+0
+%$
+Rubber
+6
+Fuel
+6
+%$
+Residual Plastic
+Refinery
+2
+6
+0
+%$
+Polymer Resin
+6
+Water
+2
+%$
+%$
+Rubber
+Rubber.png
+Rubber
+Refinery
+2
+6
+0
+Heavy Oil Residue
+2
+%$
+Crude Oil
+3
+%$
+Recycled Rubber
+Refinery
+12
+12
+0
+%$
+Plastic
+6
+Fuel
+6
+%$
+Residual Rubber
+Refinery
+2
+6
+0
+%$
+Polymer Resin
+4
+Water
+4
+%$
+%$
+Copper Powder
+CopperDust.png
+Copper Powder
+Constructor
+5
+6
+0
+%$
+Copper Ingot
+30
+%$
+%$
+Quartz Crystal
+QuartzResource.png
+Quartz Crystal
+Constructor
+3
+8
+0
+%$
+Raw Quartz
+5
+%$
+Pure Quartz Crystal
+Refinery
+7
+8
+0
+%$
+Raw Quartz
+9
+Water
+5
+%$
+%$
+Concrete
+Concrete.png
+Concrete
+Constructor
+1
+4
+0
+%$
+Limestone
+3
+%$
+Fine Concrete
+Assembler
+10
+24
+0
+%$
+Silica
+3
+Limestone
+12
+%$
+Rubber Concrete
+Assembler
+9
+12
+0
+%$
+Limestone
+10
+Rubber
+2
+%$
+Wet Concrete
+Refinery
+4
+3
+0
+%$
+Limestone
+6
+Water
+5
+%$
+%$
+Iron Rod
+IronRods.png
+Iron Rod
+Constructor
+1
+4
+0
+%$
+Iron Ingot
+1
+%$
+Steel Rod
+Constructor
+4
+5
+0
+%$
+Steel Ingot
+1
+%$
+%$
+Steel Beam
+SteelBeam.png
+Steel Beam
+Constructor
+1
+4
+0
+%$
+Steel Ingot
+4
+%$
+%$
+Steel Pipe
+SteelPipe.png
+Steel Pipe
+Constructor
+2
+6
+0
+%$
+Steel Ingot
+3
+%$
+%$
+Screw
+IronScrews.png
+Screw
+Constructor
+4
+6
+0
+%$
+Iron Rod
+1
+%$
+Cast Screw
+Constructor
+20
+24
+0
+%$
+Iron Ingot
+5
+%$
+Steel Screw
+Constructor
+52
+12
+0
+%$
+Steel Beam
+1
+%$
+%$
+Iron Plate
+IronPlates.png
+Iron Plate
+Constructor
+2
+6
+0
+%$
+Iron Ingot
+3
+%$
+Coated Iron Plate
+Assembler
+15
+12
+0
+%$
+Iron Ingot
+10
+Plastic
+2
+%$
+Steel Coated Plate
+Assembler
+18
+24
+0
+%$
+Steel Ingot
+3
+Plastic
+2
+%$
+%$
+Wire
+Wire.png
+Wire
+Constructor
+2
+4
+0
+%$
+Copper Ingot
+1
+%$
+Caterium Wire
+Constructor
+8
+4
+0
+%$
+Caterium Ingot
+1
+%$
+Fused Wire
+Assembler
+30
+20
+0
+%$
+Copper Ingot
+4
+Caterium Ingot
+1
+%$
+Iron Wire
+Constructor
+9
+24
+0
+%$
+Iron Ingot
+5
+%$
+%$
+Quickwire
+Quickwire.png
+Quickwire
+Constructor
+5
+5
+0
+%$
+Caterium Ingot
+1
+%$
+Fused Quickwire
+Assembler
+12
+8
+0
+%$
+Caterium Ingot
+1
+Copper Ingot
+5
+%$
+%$
+Cable
+Cables.png
+Cable
+Constructor
+1
+2
+0
+%$
+Wire
+2
+%$
+Coated Cable
+Refinery
+9
+8
+0
+%$
+Wire
+5
+Heavy Oil Residue
+2
+%$
+Insulated Cable
+Assembler
+20
+12
+0
+%$
+Wire
+9
+Rubber
+6
+%$
+Quickwire Cable
+Assembler
+11
+24
+0
+%$
+Quickwire
+3
+Rubber
+2
+%$
+%$
+Reinforced Iron Plate
+ReinforcedIronPlates.png
+Reinforced Iron Plate
+Assembler
+1
+12
+0
+%$
+Iron Plate
+6
+Screw
+12
+%$
+Adhered Iron Plate
+Assembler
+1
+16
+0
+%$
+Iron Plate
+3
+Rubber
+1
+%$
+Bolted Iron Plate
+Assembler
+3
+12
+0
+%$
+Iron Plate
+18
+Screw
+50
+%$
+Stitched Iron Plate
+Assembler
+3
+32
+0
+%$
+Iron Plate
+10
+Wire
+20
+%$
+%$
+Copper Sheet
+CopperSheet.png
+Copper Sheet
+Constructor
+1
+6
+0
+%$
+Copper Ingot
+2
+%$
+Steamed Copper Ingot
+Refinery
+3
+8
+0
+%$
+Copper Ingot
+3
+Water
+3
+%$
+%$
+Modular Frame
+ModularFrame.png
+Modular Frame
+Assembler
+2
+60
+0
+%$
+Reinforced Iron Plate
+3
+Iron Rod
+12
+%$
+Bolted Frame
+Assembler
+2
+60
+24
+%$
+Reinforced Iron Plate
+3
+Screw
+56
+%$
+Steeled Frame
+Assembler
+3
+60
+0
+%$
+Reinforced Iron Plate
+2
+Steel Pipe
+10
+%$
+%$
+Encased Industrial Beam
+EncasedSteelBeam.png
+Encased Industrial Beam
+Assembler
+1
+10
+0
+%$
+Steel Beam
+4
+Concrete
+5
+%$
+Encased Industrial Pipe
+Assembler
+1
+15
+0
+%$
+Steel Pipe
+7
+Concrete
+5
+%$
+%$
+Heavy Modular Frame
+ModularFrameHeavy.png
+Heavy Modular Frame
+Manufacturer
+1
+30
+0
+%$
+Modular Frame
+5
+Steel Pipe
+15
+Encased Industrial Beam
+5
+Screw
+100
+%$
+Heavy Encased Frame
+Manufacturer
+3
+64
+0
+%$
+Modular Frame
+8
+Encased Industrial Beam
+10
+Steel Pipe
+36
+Concrete
+22
+%$
+Heavy Flexible Frame
+Manufacturer
+1
+16
+0
+%$
+Modular Frame
+5
+Encased Industrial Beam
+3
+Rubber
+20
+Screw
+104
+%$
+%$
+Alclad Aluminum Sheet
+AluminumSheet.png
+Alclad Aluminum Sheet
+Assembler
+3
+6
+0
+%$
+Aluminum Ingot
+3
+Copper Ingot
+1
+%$
+%$
+Aluminum Casing
+AluminumCasing.png
+Aluminum Casing
+Constructor
+2
+2
+0
+%$
+Aluminum Ingot
+3
+%$
+Alclad Casing
+Assembler
+15
+8
+0
+%$
+Aluminum Ingot
+20
+Copper Ingot
+10
+%$
+%$
+Battery
+Battery.png
+Battery
+Blender
+1
+3
+0
+Water
+1.5
+%$
+Sulfuric Acid
+2.5
+Alumina Solution
+2
+Aluminum Casing
+1
+%$
+Classic Battery
+Manufacturer
+4
+8
+0
+%$
+Sulfur
+6
+Alclad Aluminum Sheet
+7
+Plastic
+8
+Wire
+12
+%$
+%$
+Nitric Acid
+NitricAcid.png
+Nitric Acid
+Blender
+3
+6
+0
+%$
+Nitrogen Gas
+12
+Water
+3
+Iron Plate
+1
+%$
+%$
+Fused Modular Frame
+FusedModularFrame.png
+Fused Modular Frame
+Blender
+1
+40
+0
+%$
+Heavy Modular Frame
+1
+Aluminum Casing
+50
+Nitrogen Gas
+25
+%$
+Heat-Fused Frame
+Blender
+1
+20
+0
+%$
+Heavy Modular Frame
+1
+Aluminum Ingot
+50
+Nitric Acid
+8
+Fuel
+10
+%$
+%$
+Fabric
+Fabric.png
+Fabric
+Assembler
+1
+4
+0
+%$
+Mycelia
+1
+Biomass
+5
+%$
+Polyester Fabric
+Refinery
+1
+2
+0
+%$
+Polymer Resin
+1
+Water
+1
+%$
+%$
+Rotor
+Rotor.png
+Rotor
+Assembler
+1
+15
+0
+%$
+Iron Rod
+5
+Screw
+25
+%$
+Copper Rotor
+Assembler
+3
+16
+0
+%$
+Copper Sheet
+6
+Screw
+52
+%$
+Steel Rotor
+Assembler
+1
+12
+0
+%$
+Steel Pipe
+2
+Wire
+6
+%$
+%$
+Stator
+Stator.png
+Stator
+Assembler
+1
+12
+0
+%$
+Steel Pipe
+3
+Wire
+8
+%$
+Quickwire Stator
+Assembler
+2
+15
+0
+%$
+Steel Pipe
+4
+Quickwire
+15
+%$
+%$
+AI Limiter
+AILimiter.png
+AI Limiter
+Assembler
+1
+12
+0
+%$
+Copper Sheet
+5
+Quickwire
+20
+%$
+%$
+Circuit Board
+CircuitBoard.png
+Circuit Board
+Assembler
+1
+8
+0
+%$
+Copper Sheet
+2
+Plastic
+4
+%$
+Caterium Circuit Board
+Assembler
+7
+48
+0
+%$
+Plastic
+10
+Quickwire
+30
+%$
+Electrode Circuit Board
+Assembler
+1
+12
+0
+%$
+Rubber
+6
+Petroleum Coke
+9
+%$
+Silicon Circuit Board
+Assembler
+5
+24
+0
+%$
+Copper Sheet
+11
+Silica
+11
+%$
+%$
+High-Speed Connector
+HighSpeedConnector.png
+High-Speed Connector
+Manufacturer
+1
+16
+0
+%$
+Quickwire
+56
+Cable
+10
+Circuit Board
+1
+%$
+Silicon High-Speed Connector
+Manufacturer
+2
+40
+0
+%$
+Quickwire
+60
+Silica
+25
+Circuit Board
+2
+%$
+%$
+Crystal Oscillator
+CrystalOscillator.png
+Crystal Oscillator
+Manufacturer
+2
+120
+0
+%$
+Quartz Crystal
+36
+Cable
+28
+Reinforced Iron Plate
+5
+%$
+Insulated Crystal Oscillator
+Manufacturer
+1
+32
+0
+%$
+Quartz Crystal
+10
+Rubber
+7
+AI Limiter
+1
+%$
+%$
+Computer
+Computer.png
+Computer
+Manufacturer
+1
+24
+0
+%$
+Circuit Board
+10
+Cable
+9
+Plastic
+18
+Screw
+52
+%$
+Caterium Computer
+Manufacturer
+1
+16
+0
+%$
+Circuit Board
+7
+Quickwire
+28
+Rubber
+12
+%$
+Crystal Computer
+Assembler
+3
+64
+0
+%$
+Circuit Board
+8
+Crystal Oscillator
+3
+%$
+%$
+Heat Sink
+Heatsink.png
+Heat Sink
+Assembler
+1
+8
+0
+%$
+Alclad Aluminum Sheet
+5
+Copper Sheet
+3
+%$
+Heat Exchanger
+Assembler
+1
+6
+0
+%$
+Aluminum Casing
+3
+Rubber
+3
+%$
+%$
+Radio Control Unit
+RadioControlUnit.png
+Radio Control Unit
+Manufacturer
+2
+48
+0
+%$
+Aluminum Casing
+32
+Crystal Oscillator
+1
+Computer
+1
+%$
+Radio Connection Unit
+Manufacturer
+1
+16
+0
+%$
+Heat Sink
+4
+High-Speed Connector
+2
+Quartz Crystal
+12
+%$
+Radio Control System
+Manufacturer
+3
+40
+0
+%$
+Crystal Oscillator
+1
+Circuit Board
+10
+Aluminum Casing
+60
+Rubber
+30
+%$
+%$
+Electromagnetic Control Rod
+ElectromagneticControlRod.png
+Electromagnetic Control Rod
+Assembler
+2
+30
+0
+%$
+Stator
+3
+AI Limiter
+2
+%$
+Electromagnetic Connection Rod
+Assembler
+2
+15
+0
+%$
+Stator
+2
+High-Speed Connector
+1
+%$
+%$
+Motor
+Engine.png
+Motor
+Assembler
+1
+12
+0
+%$
+Rotor
+2
+Stator
+2
+%$
+Electric Motor
+Assembler
+2
+16
+0
+%$
+Electromagnetic Control Rod
+1
+Rotor
+2
+%$
+Rigour Motor
+Manufacturer
+6
+48
+0
+%$
+Rotor
+3
+Stator
+3
+Crystal Oscillator
+1
+%$
+%$
+Cooling System
+CoolingSystem.png
+Cooling System
+Blender
+1
+10
+0
+%$
+Heat Sink
+2
+Rubber
+2
+Water
+5
+Nitrogen Gas
+25
+%$
+Cooling Device
+Blender
+2
+32
+0
+%$
+Heat Sink
+5
+Motor
+1
+Nitrogen Gas
+24
+%$
+%$
+Supercomputer
+SuperComputer.png
+Supercomputer
+Manufacturer
+1
+32
+0
+%$
+Computer
+2
+AI Limiter
+2
+High-Speed Connector
+3
+Plastic
+28
+%$
+OC Supercomputer
+Assembler
+1
+20
+0
+%$
+Radio Control Unit
+3
+Cooling System
+3
+%$
+Super-State Computer
+Manufacturer
+2
+50
+0
+%$
+Computer
+3
+Electromagnetic Control Rod
+2
+Battery
+20
+Wire
+45
+%$
+%$
+Pressure Conversion Cube
+ConversionCube.png
+Pressure Conversion Cube
+Assembler
+1
+60
+0
+%$
+Fused Modular Frame
+1
+Radio Control Unit
+2
+%$
+%$
+Nuclear Pasta
+NuclearPasta.png
+Nuclear Pasta
+Particle Accelerator
+1
+120
+0
+%$
+Copper Powder
+200
+Pressure Conversion Cube
+1
+%$
+%$
+Turbo Motor
+TurboMotor.png
+Turbo Motor
+Manufacturer
+1
+32
+0
+%$
+Cooling System
+4
+Radio Control Unit
+2
+Motor
+4
+Rubber
+24
+%$
+Turbo Electric Motor
+Manufacturer
+3
+64
+0
+%$
+Motor
+7
+Radio Control Unit
+9
+Electromagnetic Control Rod
+5
+Rotor
+7
+%$
+Turbo Pressure Motor
+Manufacturer
+2
+32
+0
+%$
+Motor
+4
+Pressure Conversion Cube
+1
+Packaged Nitrogen Gas
+24
+Stator
+8
+%$
+%$
+%$
+Miner Mk.1
+8 14 18
+Portable Miner
+1
+Iron Plate
+10
+Concrete
+10
+%$
+Miner Mk.2
+8 14 18
+Portable Miner
+2
+Encased Industrial Beam
+10
+Steel Pipe
+20
+Modular Frame
+10
+%$
+Miner Mk.3
+8 14 18
+Portable Miner
+3
+Steel Pipe
+50
+Super Computer
+5
+Fused Modular Frame
+10
+Turbo Motor
+3
+%$
+Oil Extractor
+8 14 20
+Motor
+15
+Encased Industrial Beam
+20
+Cable
+60
+%$
+Water Pump
+20 20 26
+Copper Sheet
+20
+Reinforced Iron Plate
+10
+Rotor
+10
+%$
+Resourse Well Pressurizer
+20 20 26
+Wire
+200
+Rubber
+50
+Encased Industrial Beam
+50
+Motor
+50
+%$
+Resourse Well Extractor
+5 5 5
+Steel Beam
+10
+Plastic
+10
+%$
+Smelter
+6 9 10
+Iron Rod
+5
+Wire
+8
+%$
+Foundry
+8 9 9
+Modular Frame
+10
+Rotor
+10
+Concrete
+20
+%$
+Constructor
+8 10 8
+Reinforced Iron Plate
+2
+Cable
+8
+%$
+Assembler
+10 15 8
+Reinforced Iron Plate
+8
+Rotor
+4
+Cable
+10
+%$
+Manufacturer
+20 22 12
+Motor
+5
+Heavy Modular Frame
+10
+Cable
+50
+Plastic
+50
+%$
+Refinery
+10 20 31
+Motor
+10
+Encased Industrial Beam
+10
+Steel Pipe
+30
+Copper Sheet
+20
+%$
+Packager
+8 8 12
+Steel Beam
+20
+Rubber
+10
+Plastic
+10
+%$
+Blender
+19 16 16
+Motor
+20
+Heavy Modular Frame
+10
+Aluminum Casing
+50
+Radio Control Unit
+5
+%$
+Particle Accelerator
+38 24 38
+Radio Control Unit
+25
+Electromagnetic Control Rod
+100
+Supercomputer
+10
+Cooling System
+50
+Fused Modular Frame
+20
+Turbo Motor
+10
+%$
+%$

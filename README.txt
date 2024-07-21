@@ -1,0 +1,1 @@
+to use programm download whole "release" folder and run .exe
