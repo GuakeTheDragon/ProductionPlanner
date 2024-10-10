@@ -1,5 +1,6 @@
 #include "satisitem.h"
 
+
 void AvailableMod::setType(QString str)
 {
     type = str;
@@ -19,11 +20,11 @@ AvailableModules::AvailableModules(QObject *parent) :
 {
 
 }
-int AvailableModules::rowCount(const QModelIndex &parent) const
+int AvailableModules::rowCount(const QModelIndex &) const
 {
     return list.count();
 }
-int AvailableModules::columnCount(const QModelIndex &parent) const
+int AvailableModules::columnCount(const QModelIndex &) const
 {
     return 3;
 }
@@ -97,6 +98,7 @@ bool AvailableModules::setData(const QModelIndex &index, const QVariant &value, 
         }
     }
     emit dataChanged(this->index(0,0), this->index(this->list.size(),2));
+    return 0;
 }
 Qt::ItemFlags AvailableModules::flags(const QModelIndex &index) const
 {
@@ -216,11 +218,11 @@ Modules::Modules(QObject *parent) :
 {
 
 }
-int Modules::rowCount(const QModelIndex &parent) const
+int Modules::rowCount(const QModelIndex &) const
 {
     return items.count();
 }
-int Modules::columnCount(const QModelIndex &parent) const
+int Modules::columnCount(const QModelIndex &) const
 {
     return 1;
 }
@@ -284,6 +286,7 @@ bool Modules::setData(const QModelIndex &index, const QVariant &value, int role)
         break;
     }
     emit dataChanged(this->index(0,0), this->index(this->items.size(),0));
+    return 0;
 }
 Qt::ItemFlags Modules::flags(const QModelIndex &index) const
 {
@@ -328,11 +331,11 @@ RecipeList::RecipeList(QObject *parent) :
 {
     //recipes.append(new Recipe("Name", new Machine(), 10, 10, 10, 10));
 }
-int RecipeList::rowCount(const QModelIndex &parent) const
+int RecipeList::rowCount(const QModelIndex &) const
 {
     return recipes.count();
 }
-int RecipeList::columnCount(const QModelIndex &parent) const
+int RecipeList::columnCount(const QModelIndex &) const
 {
     return 1;
 }
@@ -365,6 +368,7 @@ bool RecipeList::setData(const QModelIndex &index, const QVariant &value, int ro
         break;
     }
     emit dataChanged(this->index(0), this->index(this->recipes.size()));
+    return 0;
 }
 Qt::ItemFlags RecipeList::flags(const QModelIndex &index) const
 {
@@ -446,7 +450,7 @@ long long productionCalculator(QTreeWidgetItem* parent, QList<Item*> *seen, Item
         qDebug() << "...cost: " << cost;
         if (cost < prevCost)
         {
-            for (int k = 0; current->childCount(); k++)
+            while(current->childCount())
             {
                 current->removeChild(current->takeChild(0));
             }
