@@ -86,15 +86,15 @@ bool AvailableModules::setData(const QModelIndex &index, const QVariant &value, 
     {
         switch (index.column())
         {
-            case 0:
-                list[index.row()].setType(value.toString());
-                break;
-            case 1:
-                list[index.row()].setName(value.toString());
-                break;
-            case 2:
-                list[index.row()].setDesc(value.toString());
-                break;
+        case 0:
+            list[index.row()].setType(value.toString());
+            break;
+        case 1:
+            list[index.row()].setName(value.toString());
+            break;
+        case 2:
+            list[index.row()].setDesc(value.toString());
+            break;
         }
     }
     emit dataChanged(this->index(0,0), this->index(this->list.size(),2));
@@ -153,7 +153,7 @@ Machine* ContentPackage::findMachine(QString name)
     for(int i=0; i<machines.count(); i++)
     {
         if (machines[i]->name == name)
-                return machines[i];
+            return machines[i];
     }
     return nullptr;
 }
@@ -162,7 +162,7 @@ Item* ContentPackage::findItem(QString name)
     for(int i=0; i<items.count(); i++)
     {
         if (items[i]->name == name)
-                return items[i];
+            return items[i];
     }
     return nullptr;
 }
@@ -278,7 +278,7 @@ bool Modules::setData(const QModelIndex &index, const QVariant &value, int role)
     switch (role)
     {
     //case Qt::EditRole:
-        //items.at(index.row())->setInclusion(!items.at(index.row())->inclusion);
+    //items.at(index.row())->setInclusion(!items.at(index.row())->inclusion);
     case Qt::CheckStateRole:
         items.at(index.row())->setInclusion(value.toInt());
         break;
@@ -360,7 +360,7 @@ bool RecipeList::setData(const QModelIndex &index, const QVariant &value, int ro
     switch (role)
     {
     //case Qt::EditRole:
-        //recipes.at(index.row())->setInclusion(!recipes.at(index.row())->inclusion);
+    //recipes.at(index.row())->setInclusion(!recipes.at(index.row())->inclusion);
     case Qt::CheckStateRole:
         recipes.at(index.row())->setInclusion(value.toInt());
         break;
@@ -384,13 +384,13 @@ int RecipeList::recipesCount()
 void RecipeList::addItemRecipes(Item* item)
 {
     beginRemoveRows(QModelIndex(), 0, recipes.count());
-        recipes.clear();
+    recipes.clear();
     endRemoveRows();
 
     //beginInsertRows(0, item->recipes.count());
     for (Recipe* i : item->recipes) {
         beginInsertRows(QModelIndex(), recipes.count(), recipes.count());
-            recipes.append(i);
+        recipes.append(i);
         endInsertRows();
     }
 }
@@ -501,10 +501,10 @@ long long productionCalculator(ProductionBranch* parent, QList<Item*> *seen, Ite
     qDebug() << "Current production: " << item->name;
 
     ProductionBranch* selectedBranch = new ProductionBranch(item);  // Creates a temporar production line
-                                                                    // Used to create new branches
+        // Used to create new branches
     selectedBranch->cost = INT64_MAX;   // The cost is maximum (used to search for most cheap production line)
     ProductionBranch* tempBranch;       // Creates a temporar production line
-                                        // Used to search for cheaper production line from all recipes
+        // Used to search for cheaper production line from all recipes
     Ingredient* jIngredient;    // used to reference for an Ingredient
 
     // Search for valid recipes
@@ -591,6 +591,6 @@ void productionCalculator(QTreeWidget* widget, Item *item, double speed)
 
     somethingNew->children.at(0)->transformToQTree(thing);      // Convert production line into QTreeWidgetItem
     widget->addTopLevelItem(thing);                             // Add the QTreeWidgetItem into the list
-                                                                // Finally shown to the USER!!!
+        // Finally shown to the USER!!!
     widget->expandRecursively(widget->indexFromItem(thing));    // EXPAND'N SHOW THE WHOLE BEAUTY OF THE PRODUCTION LINE!
 }

@@ -41,8 +41,8 @@ public:
     Machine* machine;                       // The machine where the RECIPE is processed.
     float quantity;                         // Amount of ITEMS made by the RECIPE.
     double time, powerConsuption, resCost;  // time used to process whole the RECIPE;
-                                            // (WIP) powerConsuption - how much power used to run the machine;
-                                            // resCost - total cost of the RECIPE (OBSOLETE).
+        // (WIP) powerConsuption - how much power used to run the machine;
+        // resCost - total cost of the RECIPE (OBSOLETE).
     Qt::CheckState inclusion = Qt::CheckState::Unchecked;   // Used to include/exclude the recipe from further calculations.
     QList<Ingredient*> ingredients;         // QList of refs to ingredients (items and quantity used by the RECIPE).
     QList<Ingredient*> excess;              // Excess/Additional items made by the RECIPE.
@@ -162,7 +162,7 @@ class Modules : public QAbstractTableModel
     //friend void productionCalculator();
 public:
     explicit Modules(QObject *parent = 0);  // don't remember what is this for
-                                            // Program had several troubles during build with the lack of it
+        // Program had several troubles during build with the lack of it
     int rowCount(const QModelIndex &index = QModelIndex()) const;                               // Must be defined
     int columnCount(const QModelIndex &index = QModelIndex()) const;                            // Must be defined
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;                  // Must be defined
