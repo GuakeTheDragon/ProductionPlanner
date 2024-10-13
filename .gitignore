@@ -1,5 +1,6 @@
-*build*
-*debug*
+build
+debug
+release
 Makefile*
 SatisfactoryCalculator2.pro.user*
 release.rar
