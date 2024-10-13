@@ -500,22 +500,28 @@ long long productionCalculator(ProductionBranch* parent, QList<Item*> *seen, Ite
 {
     qDebug() << "Current production: " << item->name;
 
-    ProductionBranch* selectedBranch = new ProductionBranch(item);
-    selectedBranch->cost = INT64_MAX;
-    ProductionBranch* tempBranch;
-    Ingredient* jIngredient;
+    ProductionBranch* selectedBranch = new ProductionBranch(item);  // Creates a temporar production line
+                                                                    // Used to create new branches
+    selectedBranch->cost = INT64_MAX;   // The cost is maximum (used to search for most cheap production line)
+    ProductionBranch* tempBranch;       // Creates a temporar production line
+                                        // Used to search for cheaper production line from all recipes
+    Ingredient* jIngredient;    // used to reference for an Ingredient
 
+    // Search for valid recipes
     for (int i = 0; i < item->recipes.count(); i++)
     {
+        // Check if the recipe is available
         if (!item->recipes.at(i)->inclusion)
         {
             continue;
         }
+        // Copy recipe into the tempBranch
         tempBranch = new ProductionBranch(item);
         tempBranch->recipe = item->recipes.at(i);
         tempBranch->speed = speed;
         qDebug() << "Current recipe: " <<  tempBranch->recipe->name;
 
+        // Appends items into "seen" list to prevent self-repeating search
         for (int j=0;j<seen->count();j++)
         {
             qDebug() << "Already seen: " << seen->at(j)->name;
@@ -540,9 +546,11 @@ long long productionCalculator(ProductionBranch* parent, QList<Item*> *seen, Ite
 
         seen->append(item);
         long long tempCost;
+        // Check for the cost
         for (int j = 0;j<tempBranch->recipe->ingredients.count();j++)
         {
             jIngredient = tempBranch->recipe->ingredients.at(j);
+            // And search for all the items in recipe
             tempCost = productionCalculator(tempBranch, seen, jIngredient->reference, speed * (double(jIngredient->quantity) / double(tempBranch->recipe->quantity)));
             if (tempCost == INT64_MAX)
             {
@@ -555,6 +563,7 @@ long long productionCalculator(ProductionBranch* parent, QList<Item*> *seen, Ite
         if (tempBranch->cost != INT64_MAX)
             tempBranch->cost /= tempBranch->recipe->quantity;
         qDebug() << "...cost: " << tempBranch->cost;
+        // If the recipe is cheaper than previous, the cheaper one is used in later calculations
         if (tempBranch->cost < selectedBranch->cost)
         {
             delete selectedBranch;
@@ -563,26 +572,25 @@ long long productionCalculator(ProductionBranch* parent, QList<Item*> *seen, Ite
         delete tempBranch;
         seen->removeLast();
     }
+    // Add the recipe into the branch if it's cheap enough
     parent->children.append(selectedBranch);
 
     return selectedBranch->cost;
 }
 
+// Calculation that starts the upper function.
+// Started by the USER
 void productionCalculator(QTreeWidget* widget, Item *item, double speed)
 {
-    QList<Item*>* seen = new QList<Item*>;
-    QTreeWidgetItem* thing = new QTreeWidgetItem;
+    QList<Item*>* seen = new QList<Item*>;          // Creates "seen" list
+    QTreeWidgetItem* thing = new QTreeWidgetItem;   // Creates the ROOT branch
 
-    ProductionBranch* somethingNew = new ProductionBranch();
-    somethingNew->speed = speed;
-    productionCalculator(somethingNew, seen, item, speed);
+    ProductionBranch* somethingNew = new ProductionBranch();    // Creates the ROOT production line for the Calculation function
+    somethingNew->speed = speed;                                // Speed set by USER
+    productionCalculator(somethingNew, seen, item, speed);      // Yey, CALCULATIONS! uhh...
 
-    somethingNew->children.at(0)->transformToQTree(thing);
-    widget->addTopLevelItem(thing);
-
-    //productionCalculator(thing, seen, item, speed);
-    //QTreeWidgetItem* output = thing->takeChild(0);
-    //delete thing;
-    //widget->addTopLevelItem(output);
-    widget->expandRecursively(widget->indexFromItem(thing));
+    somethingNew->children.at(0)->transformToQTree(thing);      // Convert production line into QTreeWidgetItem
+    widget->addTopLevelItem(thing);                             // Add the QTreeWidgetItem into the list
+                                                                // Finally shown to the USER!!!
+    widget->expandRecursively(widget->indexFromItem(thing));    // EXPAND'N SHOW THE WHOLE BEAUTY OF THE PRODUCTION LINE!
 }

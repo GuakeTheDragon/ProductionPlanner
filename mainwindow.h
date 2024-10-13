@@ -3,9 +3,9 @@
 
 #include <QMainWindow>
 #include <QTreeWidget>
-#include <QCloseEvent>
+#include <QCloseEvent>  // WIP (Work In Progess) (Unfinished feature)
 #include <QFile>
-#include "itemedit.h"
+#include "itemedit.h"   // The library contains some essential stuff, but itself in WIP
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
