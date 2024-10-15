@@ -3,9 +3,10 @@
 
 #include <QMainWindow>
 #include <QTreeWidget>
-#include <QCloseEvent>  // WIP (Work In Progess) (Unfinished feature)
+#include <QCloseEvent>
 #include <QFile>
-#include "itemedit.h"   // The library contains some essential stuff, but itself in WIP
+#include <QSortFilterProxyModel>
+#include "satisitem.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,11 +21,7 @@ public:
     ~MainWindow();
 
 private slots:
-    void closeEvent (QCloseEvent *event);
-
     void on_startButton_clicked();
-
-    void on_itemListEdit_clicked();
 
     void on_itemView_clicked(const QModelIndex &index);
 
@@ -42,7 +39,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    itemEdit *item_Edit;
 
     Modules *itemList;
     RecipeList *recipeList;
@@ -51,4 +47,20 @@ private:
     QString DescryptionStyle;
     QString DescryptionStyleTab;
 };
+
+// Used to transform other widgets into DockWidgets
+// (A better solution should be found)
+class DockableWidget : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    DockableWidget(QWidget *parent = 0, const char *name = 0);
+    ~DockableWidget();
+
+protected:
+    void closeEvent(QCloseEvent *event);
+    //void contextMenuEvent(QContextMenuEvent *event);
+};
+
 #endif // MAINWINDOW_H

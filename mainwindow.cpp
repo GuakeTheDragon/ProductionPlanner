@@ -6,13 +6,11 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);                      // connecting UI
-    item_Edit = new itemEdit(nullptr);
     ui->itemListEdit->setVisible(false);
     ui->tableView->setVisible(false);
     menuBar()->setVisible(false);
     ui->startButton->setEnabled(false);
     ui->removeButton->setEnabled(false);
-    //appdata = getenv("APPDATA");
     ui->tab->setCentralWidget(ui->recipeView);  // constructing configure area
     ui->tab->addDockWidget(Qt::LeftDockWidgetArea, ui->dockWidget);
     ui->tab->addDockWidget(Qt::RightDockWidgetArea, ui->dockWidget_2);
@@ -170,30 +168,13 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-    delete item_Edit;
     delete ui;
-}
-
-void MainWindow::closeEvent (QCloseEvent *)
-{
-    item_Edit->close();
-    //item_Edit->setParent(this);
 }
 
 void MainWindow::on_startButton_clicked()
 {
     productionCalculator(ui->treeWidget, itemList->getItem(proxy->mapToSource(ui->itemView->currentIndex())), ui->quantity->value());
 }
-
-void MainWindow::on_itemListEdit_clicked()
-{
-    //generateVanillaContentPack();
-    if (!item_Edit->isVisible()){
-        item_Edit->show();
-    }
-    item_Edit->activateWindow();
-}
-
 
 void MainWindow::on_itemView_clicked(const QModelIndex &index)
 {
@@ -307,7 +288,7 @@ void MainWindow::on_recipeView_doubleClicked(const QModelIndex &index)
     ui->ingredientView->update();
 }
 
-void MainWindow::on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *previous)
+void MainWindow::on_treeWidget_currentItemChanged(QTreeWidgetItem *current, QTreeWidgetItem *)
 {
     if (current)
         ui->removeButton->setEnabled(true);
@@ -323,3 +304,12 @@ void MainWindow::on_removeButton_clicked()
         ui->removeButton->setEnabled(false);
 }
 
+
+// To transform other widgets into DockWidgets
+DockableWidget::DockableWidget(QWidget *parent, const char *name)
+    : QMainWindow(parent)
+{
+    this->setObjectName(name);
+}
+DockableWidget::~DockableWidget() {}
+void DockableWidget::closeEvent(QCloseEvent *) {}

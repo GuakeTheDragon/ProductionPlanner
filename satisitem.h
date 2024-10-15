@@ -224,10 +224,6 @@ public:
 
 };
 
-// Actual production planning
-// arg QTreeWidgetItem is (most probably) OBSOLETE and never be used.
-long long productionCalculator(QTreeWidgetItem* parent, QList<Item*> *seen, Item *item, double speed);
-// This is what actually used
 // returns the COST of the production line
 long long productionCalculator(ProductionBranch* parent, QList<Item*> *seen, Item *item, double speed);
 // Used to start the calculations by the USER

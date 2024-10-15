@@ -32,7 +32,7 @@
 #include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
-#include "itemedit.h"
+#include "mainwindow.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -149,7 +149,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 809, 22));
+        menubar->setGeometry(QRect(0, 0, 809, 21));
         menuFile = new QMenu(menubar);
         menuFile->setObjectName("menuFile");
         menuHelp = new QMenu(menubar);

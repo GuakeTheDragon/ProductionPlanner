@@ -53,15 +53,6 @@ QVariant AvailableModules::data(const QModelIndex &index, int role) const
         case 2:
             return list[index.row()].description;
         }
-    /*case Qt::BackgroundRole:
-    {
-        int temp = list.at(index.row()).value;
-        return QColor(255, 255-temp, 255-(temp/2));
-    }
-    case Qt::ToolTipRole:
-        return list.at(index.row()).value;
-    case Qt::CheckStateRole:
-        return list.at(index.row()).state;*/
     default:
         return QVariant();
     }
@@ -110,13 +101,11 @@ Qt::ItemFlags AvailableModules::flags(const QModelIndex &index) const
 void AvailableModules::add(const QModelIndex &index)
 {
     beginInsertRows(QModelIndex(), index.row()+1, index.row()+1);
-    //list.insert((index.isValid() ? index.row()+1 : 0), *(new ContentPackage()));
     endInsertRows();
 }
 void AvailableModules::remove(const QModelIndex &index)
 {
     beginRemoveRows(QModelIndex(), index.row(), index.row());
-    //list.removeAt(index.row());
     endRemoveRows();
 }
 
@@ -249,24 +238,6 @@ QVariant Modules::data(const QModelIndex &index, int role) const
         return QSize(16,16);
     case Qt::DecorationRole:
         return (items.at(index.row())->img).scaled(32,32);
-    /*case Qt::EditRole:
-        switch (index.column())
-        {
-        case 0:
-                return list[index.row()].type;
-        case 1:
-                return list[index.row()].name;
-        case 2:
-                return list[index.row()].description;
-        }
-    case Qt::BackgroundRole:
-    {
-        int temp = list.at(index.row()).value;
-        return QColor(255, 255-temp, 255-(temp/2));
-    }
-    case Qt::ToolTipRole:
-        return list.at(index.row()).value;
-    */
     case Qt::CheckStateRole:
         return items.at(index.row())->inclusion;
     default:
@@ -277,8 +248,6 @@ bool Modules::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     switch (role)
     {
-    //case Qt::EditRole:
-    //items.at(index.row())->setInclusion(!items.at(index.row())->inclusion);
     case Qt::CheckStateRole:
         items.at(index.row())->setInclusion(value.toInt());
         break;
@@ -293,7 +262,7 @@ Qt::ItemFlags Modules::flags(const QModelIndex &index) const
     if (!index.isValid())
         return Qt::NoItemFlags;
 
-    return Qt::ItemIsEnabled | /*Qt::ItemIsUserCheckable | Qt::ItemIsEditable |*/ Qt::ItemIsSelectable;
+    return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 }
 int Modules::itemsCount()
 {
@@ -329,7 +298,7 @@ Item* Modules::getItem(int index)
 RecipeList::RecipeList(QObject *parent) :
     QAbstractListModel(parent)
 {
-    //recipes.append(new Recipe("Name", new Machine(), 10, 10, 10, 10));
+
 }
 int RecipeList::rowCount(const QModelIndex &) const
 {
@@ -359,8 +328,6 @@ bool RecipeList::setData(const QModelIndex &index, const QVariant &value, int ro
 {
     switch (role)
     {
-    //case Qt::EditRole:
-    //recipes.at(index.row())->setInclusion(!recipes.at(index.row())->inclusion);
     case Qt::CheckStateRole:
         recipes.at(index.row())->setInclusion(value.toInt());
         break;
@@ -375,7 +342,7 @@ Qt::ItemFlags RecipeList::flags(const QModelIndex &index) const
     if (!index.isValid())
         return Qt::NoItemFlags;
 
-    return Qt::ItemIsEnabled | /*Qt::ItemIsUserCheckable |*/ Qt::ItemIsSelectable;
+    return Qt::ItemIsEnabled | Qt::ItemIsSelectable;
 }
 int RecipeList::recipesCount()
 {
@@ -387,7 +354,6 @@ void RecipeList::addItemRecipes(Item* item)
     recipes.clear();
     endRemoveRows();
 
-    //beginInsertRows(0, item->recipes.count());
     for (Recipe* i : item->recipes) {
         beginInsertRows(QModelIndex(), recipes.count(), recipes.count());
         recipes.append(i);
@@ -401,99 +367,6 @@ Recipe* RecipeList::getItemRecipe(int index)
 void RecipeList::swapItemInclusion(const QModelIndex &index)
 {
     recipes.at(index.row())->setInclusion(!recipes.at(index.row())->inclusion * 2);
-
-}
-
-
-long long productionCalculator(QTreeWidgetItem* parent, QList<Item*> *seen, Item *item, double speed)
-{
-    qDebug() << "Current production: " << item->name;
-    for (int i=0;i<seen->count();i++)
-    {
-        if (seen->at(i) == item)
-        {
-            qDebug() << "ABORT: " << item->name;
-            return INT32_MAX;
-        }
-        qDebug() << "Already seen: " << seen->at(i)->name;
-    }
-    seen->append(item);
-    long long cost = 0;
-    long long prevCost = INT64_MAX;
-    double actualSpeed;
-    QTreeWidgetItem* tempBranch = new QTreeWidgetItem;
-    QTreeWidgetItem* current = new QTreeWidgetItem;
-    Recipe* iRecipe;
-    Ingredient* jIngredient;
-    Ingredient* jExcess;
-    for (int i=0;i<item->recipes.count();i++)
-    {
-        iRecipe = item->recipes.at(i);
-        qDebug() << "Current recipe: " << iRecipe->name;
-        //actualSpeed /= (60 * item->recipes.at(i)->quantity / item->recipes.at(i)->time);
-        actualSpeed = speed / (60 * iRecipe->quantity / iRecipe->time);
-        cost = iRecipe->resCost;
-        if (!iRecipe->inclusion)
-        {
-            continue;
-        }
-        //target->addChild(new QTreeWidgetItem);
-        for (int j = 0;j<iRecipe->ingredients.count();j++)
-        {
-            jIngredient = iRecipe->ingredients.at(j);
-            //cost += productionCalculator(target->child(j), item->recipes.at(i)->ingredients.at(j)->reference, item->recipes.at(i)->ingredients.at(j)->quantity);
-            cost += productionCalculator(tempBranch, seen, jIngredient->reference, (60 * jIngredient->quantity / iRecipe->time) * actualSpeed);
-        }
-        //cost *= item->recipes.at(i)->time;
-        //cost *= quantity;
-        cost /= iRecipe->quantity;
-        qDebug() << "...cost: " << cost;
-        if (cost < prevCost)
-        {
-            while(current->childCount())
-            {
-                current->removeChild(current->takeChild(0));
-            }
-            delete current;
-            current = new QTreeWidgetItem;
-            current = tempBranch->clone();
-            prevCost = cost;
-            QString infoText = "";
-            for (int j=0;j<iRecipe->excess.count();j++)
-            {
-                jExcess = iRecipe->excess.at(j);
-                current->setIcon(1, QIcon(QPixmap::fromImage(jExcess->reference->img)));
-                infoText += QString::number((60 * jExcess->quantity / iRecipe->time) * actualSpeed, 'g', 5);
-                infoText += "/m ";
-                infoText += jExcess->reference->name;
-                current->setText(1, infoText);
-                //if (j < item->recipes.at(i)->excess.count())
-                infoText = "";
-            }
-            current->setIcon(2, QIcon(QPixmap::fromImage(iRecipe->machine->img)));
-            infoText += iRecipe->machine->name;
-            infoText += ": ";
-            infoText += iRecipe->name;
-            current->setText(2, infoText);
-        }
-        for (int k = 0; k < tempBranch->childCount();k++)
-        {
-            tempBranch->removeChild(0);
-        }
-        delete tempBranch;
-        tempBranch = new QTreeWidgetItem;
-    }
-    current->setIcon(0, QIcon(QPixmap::fromImage(item->img)));
-    QString branchText = "";
-    branchText += QString::number(speed, 'g', 5);
-    branchText += "/m ";
-    branchText += item->name;
-    current->setText(0, branchText);
-    parent->addChild(current);
-    parent->setExpanded(true);
-
-    seen->removeLast();
-    return prevCost;
 }
 
 long long productionCalculator(ProductionBranch* parent, QList<Item*> *seen, Item *item, double speed)
