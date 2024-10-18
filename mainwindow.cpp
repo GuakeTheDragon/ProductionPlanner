@@ -11,17 +11,9 @@ MainWindow::MainWindow(QWidget *parent)
     menuBar()->setVisible(false);
     ui->startButton->setEnabled(false);
     ui->removeButton->setEnabled(false);
-    ui->tab->setCentralWidget(ui->recipeView);  // constructing configure area
-    ui->tab->addDockWidget(Qt::LeftDockWidgetArea, ui->dockWidget);
-    ui->tab->addDockWidget(Qt::RightDockWidgetArea, ui->dockWidget_2);
     ui->tabWidget->setStyleSheet("QTabBar::tab { border: none; margin: 0px; padding: 0px; height: 0px; width: 0px; }");
     ui->dockWidget->setTitleBarWidget(new QWidget());
     ui->dockWidget_2->setTitleBarWidget(new QWidget());
-
-    QFile styleF(":/qss/style.css");            // setup Source File
-    styleF.open(QFile::ReadOnly);
-    QString qssStr = styleF.readAll();          // setup Style Sheet File
-    qApp->setStyleSheet(qssStr);
 
     ui->dockWidget_3->setTitleBarWidget(new QWidget()); // constructing configure area
     ui->dockWidget_5->setTitleBarWidget(new QWidget()); // constructing configure area
@@ -29,128 +21,28 @@ MainWindow::MainWindow(QWidget *parent)
     DescryptionStyle = "<p style=\" margin-top:0px; margin-bottom:0px;\">";
     DescryptionStyleTab = "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:10px\">";
 
-    ContentPackage *lmao = new ContentPackage();
+    QFile styleF(":/qss/style.css");
+    styleF.open(QFile::ReadOnly);           // setup Source File
+    if(!styleF.isOpen()) {
+        qDebug() << "Error opening QSS\n" << styleF.error();
+    }
+    QString qssStr = styleF.readAll();          // setup Style Sheet File
+    qApp->setStyleSheet(qssStr);
+
+
+    ContentPackage *baseContent = new ContentPackage();
     QFile file;
     file.setFileName(":/source/modules/vanilla/ContentPack.txt");
     file.open(QFile::ReadOnly);
-    file.readLine();                // SourceName
-    lmao->name = file.readLine();   // ModuleName
-        lmao->name.removeLast(); lmao->name.removeLast();
-    /*while text*/file.readLine();  // Description
-        //smthg
-    /*while end file.readLine();*/   // WIP
-        //smthg
-    QString img = "";
-    QString fileOutput = file.readLine(); fileOutput.removeLast(); fileOutput.removeLast();
-    while (fileOutput != "%$")          // Adding machines
-    {
-        img = file.readLine();
-        img.removeLast(); img.removeLast();
-        lmao->machines.append(new Machine(fileOutput, QImage(QString(":/source/modules/vanilla/machines/%1").arg(img))));
-        fileOutput = file.readLine(); fileOutput.removeLast(); fileOutput.removeLast();
+    if(!file.isOpen())  {
+        qDebug() << "Error opening content pack\n" << styleF.error();
     }
-    fileOutput = file.readLine(); fileOutput.removeLast(); fileOutput.removeLast();
-    QList<QString> UndefinedItems;
-    QList<Ingredient*> UndefinedIngredient;
-    while (fileOutput != "%$")          // Adding items
-    {
-        img = file.readLine();
-        img.removeLast(); img.removeLast();
-        lmao->items.append(new Item(fileOutput, QImage(QString(":/source/modules/vanilla/icons/%1").arg(img))));
-        Item* lastItem = lmao->items.last();
-        fileOutput = file.readLine(); fileOutput.removeLast(); fileOutput.removeLast();
-        qDebug() << "New item: " + lastItem->name;
-        for (int i = 0; i<UndefinedItems.count();i++)
-        {
-            if (lastItem->name == UndefinedItems[i])
-            {
-                UndefinedIngredient[i]->reference = lastItem;
-                UndefinedIngredient.removeAt(i);
-                UndefinedItems.removeAt(i);
-            }
-        }
-        while (fileOutput != "%$")      // Adding recipes
-        {
-            lastItem->recipes.append(new Recipe());
-            Recipe* lastRecipe = lastItem->recipes.last();
-            lastRecipe->name = fileOutput;
-            fileOutput = file.readLine(); fileOutput.removeLast(); fileOutput.removeLast();
-            lastRecipe->machine = lmao->findMachine(fileOutput);
-            fileOutput = file.readLine(); fileOutput.removeLast(); fileOutput.removeLast();
-            lastRecipe->quantity = fileOutput.toFloat();
-            fileOutput = file.readLine(); fileOutput.removeLast(); fileOutput.removeLast();
-            lastRecipe->time = fileOutput.toDouble();
-            fileOutput = file.readLine(); fileOutput.removeLast(); fileOutput.removeLast();
-            lastRecipe->resCost = fileOutput.toDouble();
-            fileOutput = file.readLine(); fileOutput.removeLast(); fileOutput.removeLast();
-            while (fileOutput != "%$")  // Adding excess
-            {
-                lastRecipe->excess.append(new Ingredient());
-                Ingredient* lastExcess = lastRecipe->excess.last();
-                lastExcess->reference = lmao->findItem(fileOutput);
-                fileOutput = file.readLine(); fileOutput.removeLast(); fileOutput.removeLast();
-                lastExcess->quantity = fileOutput.toFloat();
-                fileOutput = file.readLine(); fileOutput.removeLast(); fileOutput.removeLast();
-
-                lastExcess->reference->recipes.append(new Recipe());
-                Recipe* lastExcessRecipe = lastExcess->reference->recipes.last();
-                lastExcessRecipe->name = lastRecipe->name;
-                lastExcessRecipe->machine = lastRecipe->machine;
-                lastExcessRecipe->quantity = lastExcess->quantity;
-                lastExcessRecipe->time = lastRecipe->time;
-                lastExcessRecipe->resCost = lastRecipe->resCost;
-
-                lastExcessRecipe->excess.append(new Ingredient());
-                lastExcessRecipe->excess.last()->reference = lastItem;
-                lastExcessRecipe->excess.last()->quantity = lastRecipe->quantity;
-
-                qDebug() << "New excess: " + lastItem->recipes.last()->excess.last()->reference->name;
-            }
-            fileOutput = file.readLine(); fileOutput.removeLast(); fileOutput.removeLast();
-            qDebug() << "New recipe: " + lastItem->recipes.last()->name;
-            Item* ingr = nullptr;
-            while (fileOutput != "%$")  // Adding ingredients
-            {
-                lastItem->recipes.last()->ingredients.append(new Ingredient());
-                Ingredient* lastIngredient = lastItem->recipes.last()->ingredients.last();
-                ingr = lmao->findItem(fileOutput);
-                if (ingr)
-                {
-                    lastIngredient->reference = ingr;
-                }
-                else
-                {
-                    qDebug() << "Item (" << fileOutput << ") didn't find!";
-                    UndefinedItems.append(fileOutput);
-                    qDebug() << "Item (" << fileOutput << ") appended into the list";
-                    UndefinedIngredient.append(lastIngredient);
-                    qDebug() << "Ingredient (" << fileOutput << ") appended into the list";
-                }
-                fileOutput = file.readLine(); fileOutput.removeLast(); fileOutput.removeLast();
-                lastIngredient->quantity = fileOutput.toFloat();
-                fileOutput = file.readLine(); fileOutput.removeLast(); fileOutput.removeLast();
-                if (lastIngredient->reference)
-                    qDebug() << "New Ingredient: " + lastIngredient->reference->name;
-                else
-                    qDebug() << "New Ingredient: " + UndefinedItems.last() + " / ! \\ UNDEFINED YET / ! \\";
-
-                if (lastItem->recipes.last()->excess.count())
-                {
-                    lastItem->recipes.last()->excess.last()->reference->recipes.last()->ingredients.append(new Ingredient());
-                    lastItem->recipes.last()->excess.last()->reference->recipes.last()->ingredients.last()->reference = lastIngredient->reference;
-                    lastItem->recipes.last()->excess.last()->reference->recipes.last()->ingredients.last()->quantity = lastIngredient->quantity;
-                    qDebug() << "New excess Ingredient: " + lastIngredient->reference->name;
-                }
-            }
-            fileOutput = file.readLine(); fileOutput.removeLast(); fileOutput.removeLast();
-        }
-        fileOutput = file.readLine(); fileOutput.removeLast(); fileOutput.removeLast();
-    }
+    baseContent->refill(&file);
 
     itemList = new Modules();
     recipeList = new RecipeList();
 
-    itemList->addContentPack(lmao);
+    itemList->addContentPack(baseContent);
     proxy = new QSortFilterProxyModel();
     proxy->setSourceModel(itemList);
 
@@ -304,12 +196,3 @@ void MainWindow::on_removeButton_clicked()
         ui->removeButton->setEnabled(false);
 }
 
-
-// To transform other widgets into DockWidgets
-DockableWidget::DockableWidget(QWidget *parent, const char *name)
-    : QMainWindow(parent)
-{
-    this->setObjectName(name);
-}
-DockableWidget::~DockableWidget() {}
-void DockableWidget::closeEvent(QCloseEvent *) {}

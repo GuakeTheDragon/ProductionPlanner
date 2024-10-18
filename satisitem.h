@@ -6,6 +6,7 @@
 #include <QAbstractTableModel>  // Essential for Model-View tables
 #include <QAbstractListModel>   // Essential for Model-View lists
 #include <QList>                // To use QLists of Qt
+#include <QFile>
 
 class Item;
 // Represents an individual part of each recipe
@@ -83,6 +84,7 @@ public:
     ContentPackage(QString n): name(n), items(){};
 
     void setInclusion(int i);           // Include/Exclude? Yes/No
+    bool refill(QFile *file);
     Machine* findMachine(QString name); // Returns reference of the machine, searched for by the name.
     Item* findItem(QString name);       // Return reference of the item, searched for by the name.
 };

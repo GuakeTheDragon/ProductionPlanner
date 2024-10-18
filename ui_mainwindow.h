@@ -70,7 +70,7 @@ public:
     QLabel *itemListCount;
     QPushButton *itemListEdit;
     QTabWidget *tabWidget;
-    DockableWidget *tab;
+    QWidget *tab;
     QHBoxLayout *horizontalLayout_3;
     QListView *recipeView;
     QHBoxLayout *horizontalLayout_7;
@@ -274,7 +274,7 @@ public:
         tabWidget = new QTabWidget(dockWidgetContents_5);
         tabWidget->setObjectName("tabWidget");
         tabWidget->setDocumentMode(true);
-        tab = new DockableWidget();
+        tab = new QWidget();
         tab->setObjectName("tab");
         horizontalLayout_3 = new QHBoxLayout(tab);
         horizontalLayout_3->setSpacing(0);

@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <QTreeWidget>
 #include <QCloseEvent>
-#include <QFile>
 #include <QSortFilterProxyModel>
 #include "satisitem.h"
 
@@ -48,19 +47,5 @@ private:
     QString DescryptionStyleTab;
 };
 
-// Used to transform other widgets into DockWidgets
-// (A better solution should be found)
-class DockableWidget : public QMainWindow
-{
-    Q_OBJECT
-
-public:
-    DockableWidget(QWidget *parent = 0, const char *name = 0);
-    ~DockableWidget();
-
-protected:
-    void closeEvent(QCloseEvent *event);
-    //void contextMenuEvent(QContextMenuEvent *event);
-};
 
 #endif // MAINWINDOW_H

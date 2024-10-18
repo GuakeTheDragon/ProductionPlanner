@@ -137,6 +137,126 @@ void ContentPackage::setInclusion(int i)
     else
         inclusion = Qt::Unchecked;
 }
+bool ContentPackage::refill(QFile *file)
+{
+    int debugRecipes = 0;
+
+    file->readLine();                // SourceName
+    this->name = file->readLine();   // ModuleName
+    this->name.removeLast();
+    /*while text*/file->readLine();  // Description
+        //smthg
+    /*while end file->readLine();*/   // WIP
+    //smthg
+    QString img = "";
+    QString fileOutput = file->readLine(); fileOutput.removeLast();
+    while (fileOutput != "%$")          // Adding machines
+    {
+        img = file->readLine();
+        img.removeLast();
+        this->machines.append(new Machine(fileOutput, QImage(QString(":/source/modules/vanilla/machines/%1").arg(img))));
+        fileOutput = file->readLine(); fileOutput.removeLast();
+    }
+    fileOutput = file->readLine(); fileOutput.removeLast();
+    QList<QString> UndefinedItems;
+    QList<Ingredient*> UndefinedIngredient;
+    while (fileOutput != "%$")          // Adding items
+    {
+        img = file->readLine();
+        img.removeLast();
+        this->items.append(new Item(fileOutput, QImage(QString(":/source/modules/vanilla/icons/%1").arg(img))));
+        Item* lastItem = this->items.last();
+        fileOutput = file->readLine(); fileOutput.removeLast();
+        qDebug() << "New item: " + lastItem->name;
+        for (int i = 0; i<UndefinedItems.count();i++)
+        {
+            if (lastItem->name == UndefinedItems[i])
+            {
+                UndefinedIngredient[i]->reference = lastItem;
+                UndefinedIngredient.removeAt(i);
+                UndefinedItems.removeAt(i);
+            }
+        }
+        while (fileOutput != "%$")      // Adding recipes
+        {
+            lastItem->recipes.append(new Recipe());
+            qDebug() << "Amount of recipes:     " << ++debugRecipes;        // amount of recipes
+            Recipe* lastRecipe = lastItem->recipes.last();
+            lastRecipe->name = fileOutput;
+            fileOutput = file->readLine(); fileOutput.removeLast();
+            lastRecipe->machine = this->findMachine(fileOutput);
+            fileOutput = file->readLine(); fileOutput.removeLast();
+            lastRecipe->quantity = fileOutput.toFloat();
+            fileOutput = file->readLine(); fileOutput.removeLast();
+            lastRecipe->time = fileOutput.toDouble();
+            fileOutput = file->readLine(); fileOutput.removeLast();
+            lastRecipe->resCost = fileOutput.toDouble();
+            fileOutput = file->readLine(); fileOutput.removeLast();
+            while (fileOutput != "%$")  // Adding excess
+            {
+                lastRecipe->excess.append(new Ingredient());
+                Ingredient* lastExcess = lastRecipe->excess.last();
+                lastExcess->reference = this->findItem(fileOutput);
+                fileOutput = file->readLine(); fileOutput.removeLast();
+                lastExcess->quantity = fileOutput.toFloat();
+                fileOutput = file->readLine(); fileOutput.removeLast();
+
+                lastExcess->reference->recipes.append(new Recipe());
+                Recipe* lastExcessRecipe = lastExcess->reference->recipes.last();
+                lastExcessRecipe->name = lastRecipe->name;
+                lastExcessRecipe->machine = lastRecipe->machine;
+                lastExcessRecipe->quantity = lastExcess->quantity;
+                lastExcessRecipe->time = lastRecipe->time;
+                lastExcessRecipe->resCost = lastRecipe->resCost;
+
+                lastExcessRecipe->excess.append(new Ingredient());
+                lastExcessRecipe->excess.last()->reference = lastItem;
+                lastExcessRecipe->excess.last()->quantity = lastRecipe->quantity;
+
+                qDebug() << "New excess: " + lastItem->recipes.last()->excess.last()->reference->name;
+            }
+            fileOutput = file->readLine(); fileOutput.removeLast();
+            qDebug() << "New recipe: " + lastItem->recipes.last()->name;
+            Item* ingr = nullptr;
+            while (fileOutput != "%$")  // Adding ingredients
+            {
+                lastItem->recipes.last()->ingredients.append(new Ingredient());
+                Ingredient* lastIngredient = lastItem->recipes.last()->ingredients.last();
+                ingr = this->findItem(fileOutput);
+                if (ingr)
+                {
+                    lastIngredient->reference = ingr;
+                }
+                else
+                {
+                    qDebug() << "Item (" << fileOutput << ") didn't find!";
+                    UndefinedItems.append(fileOutput);
+                    qDebug() << "Item (" << fileOutput << ") appended into the list";
+                    UndefinedIngredient.append(lastIngredient);
+                    qDebug() << "Ingredient (" << fileOutput << ") appended into the list";
+                }
+                fileOutput = file->readLine(); fileOutput.removeLast();
+                lastIngredient->quantity = fileOutput.toFloat();
+                fileOutput = file->readLine(); fileOutput.removeLast();
+                if (lastIngredient->reference)
+                    qDebug() << "New Ingredient: " + lastIngredient->reference->name;
+                else
+                    qDebug() << "New Ingredient: " + UndefinedItems.last() + " / ! \\ UNDEFINED YET / ! \\";
+
+                if (lastItem->recipes.last()->excess.count())
+                {
+                    lastItem->recipes.last()->excess.last()->reference->recipes.last()->ingredients.append(new Ingredient());
+                    lastItem->recipes.last()->excess.last()->reference->recipes.last()->ingredients.last()->reference = lastIngredient->reference;
+                    lastItem->recipes.last()->excess.last()->reference->recipes.last()->ingredients.last()->quantity = lastIngredient->quantity;
+                    qDebug() << "New excess Ingredient: " + lastIngredient->reference->name;
+                }
+            }
+            fileOutput = file->readLine(); fileOutput.removeLast();
+        }
+        fileOutput = file->readLine(); fileOutput.removeLast();
+    }
+    return 0;
+}
 Machine* ContentPackage::findMachine(QString name)
 {
     for(int i=0; i<machines.count(); i++)
@@ -423,7 +543,7 @@ long long productionCalculator(ProductionBranch* parent, QList<Item*> *seen, Ite
         for (int j = 0;j<tempBranch->recipe->ingredients.count();j++)
         {
             jIngredient = tempBranch->recipe->ingredients.at(j);
-            // And search for all the items in recipe
+            // And search for all the items in recipe2
             tempCost = productionCalculator(tempBranch, seen, jIngredient->reference, speed * (double(jIngredient->quantity) / double(tempBranch->recipe->quantity)));
             if (tempCost == INT64_MAX)
             {

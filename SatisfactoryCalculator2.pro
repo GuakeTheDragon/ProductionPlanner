@@ -1,4 +1,4 @@
-QT       += core gui xml widgets
+QT       += core gui xml widgets sql
 
 CONFIG += c++17
 
@@ -9,11 +9,13 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    satisitem.cpp
+    satisitem.cpp \
+    sqlparser.cpp
 
 HEADERS += \
     mainwindow.h \
-    satisitem.h
+    satisitem.h \
+    sqlparser.h
 
 FORMS += \
     mainwindow.ui
