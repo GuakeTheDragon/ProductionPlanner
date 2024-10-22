@@ -6,6 +6,7 @@
 #include <QCloseEvent>
 #include <QSortFilterProxyModel>
 #include "satisitem.h"
+#include "sqlparser.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

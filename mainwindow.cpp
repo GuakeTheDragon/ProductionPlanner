@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     DescryptionStyle = "<p style=\" margin-top:0px; margin-bottom:0px;\">";
     DescryptionStyleTab = "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:10px\">";
-
+/*
     QFile styleF(":/qss/style.css");
     styleF.open(QFile::ReadOnly);           // setup Source File
     if(!styleF.isOpen()) {
@@ -28,15 +28,15 @@ MainWindow::MainWindow(QWidget *parent)
     }
     QString qssStr = styleF.readAll();          // setup Style Sheet File
     qApp->setStyleSheet(qssStr);
-
+*/
 
     ContentPackage *baseContent = new ContentPackage();
     QFile file;
     file.setFileName(":/source/modules/vanilla/ContentPack.txt");
     file.open(QFile::ReadOnly);
-    if(!file.isOpen())  {
-        qDebug() << "Error opening content pack\n" << styleF.error();
-    }
+    //if(!file.isOpen())  {
+    //    qDebug() << "Error opening content pack\n" << styleF.error();
+    //}
     baseContent->refill(&file);
 
     itemList = new Modules();
