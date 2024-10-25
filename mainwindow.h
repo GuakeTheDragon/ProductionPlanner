@@ -8,6 +8,7 @@
 #include "satisitem.h"
 #include "sqlparser.h"
 
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -19,6 +20,8 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    void fill_BD_content_package(ContentPackage *contentPack);
 
 private slots:
     void on_startButton_clicked();

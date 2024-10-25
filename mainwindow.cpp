@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -56,11 +57,22 @@ MainWindow::MainWindow(QWidget *parent)
         itemList->swapItemInclusion(itemList->index(i, 0));
     }
     proxy->sort(0);
+
+    fill_BD_content_package(baseContent);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::fill_BD_content_package(ContentPackage *contentPack)
+{
+    sqlParser fileParser;
+
+    fileParser.createTables();
+
+    fileParser.parseFromContentPack(contentPack);
 }
 
 void MainWindow::on_startButton_clicked()
