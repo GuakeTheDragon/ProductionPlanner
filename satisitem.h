@@ -75,6 +75,7 @@ public:
 // Contains ITEMs (+RECIPEs, +INGREDIENTs), MACHINEs and IMAGEs for them. All in once.
 class ContentPackage
 {
+    void prepareStr(QString *str, QFile *file);
 public:
     QString name;                       // Name of the content pack
     Qt::CheckState inclusion;           // Included/Excluded in programm calculations
