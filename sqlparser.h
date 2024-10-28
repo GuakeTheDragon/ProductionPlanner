@@ -5,15 +5,25 @@
 #include <QtSql/QSqlQuery>
 #include <QtSql/QSqlError>
 #include <QBuffer>
+#include <QDebug>
 #include "satisitem.h"
 
 
 class sqlParser
 {
+
+
     QSqlDatabase dataBase;
 
-    void dbInitialazer();
+    QString dataBaseName = "myDb.sqlite";
+
+    int dbInitialazer(QString DBName);
 public:
+    enum {
+        CPExtend = 1,
+        CPNew = 2,
+    };
+
     sqlParser();
 
     void addItem(QString name, QByteArray byteArray, QString recipe_list);
@@ -27,6 +37,8 @@ public:
     void parseFromContentPack(ContentPackage *contentPack);
 
     void parseFromFile(QFile *file);
+
+    int fillContentPack(ContentPackage *contentPack, int fillMode = CPExtend, QString DBName = "myDb.sqlite");
 
 };
 

@@ -59,6 +59,7 @@ MainWindow::MainWindow(QWidget *parent)
     proxy->sort(0);
 
     fill_BD_content_package(baseContent);
+
 }
 
 MainWindow::~MainWindow()

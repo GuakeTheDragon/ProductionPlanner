@@ -2,17 +2,25 @@
 
 sqlParser::sqlParser()
 {
-    dbInitialazer();
+    dbInitialazer(dataBaseName);
+
 }
 
-void sqlParser::dbInitialazer()
+int sqlParser::dbInitialazer(QString DBName)
 {
+    if (dataBase.isOpen()) {
+        dataBase.close();
+        dataBase.removeDatabase( QSqlDatabase::defaultConnection );
+    }
+
     dataBase = QSqlDatabase::addDatabase("QSQLITE");
-    dataBase.setDatabaseName("myDb.sqlite");
+    dataBase.setDatabaseName(DBName);
 
     if(!dataBase.open()) {
         qDebug() << "dataBase opening problem\n";
+        return 1;
     }
+    return 0;
 }
 
 void sqlParser::addItem(QString name, QByteArray img, QString recipe_list)
@@ -79,7 +87,7 @@ void sqlParser::addRecipe(QString name, float poduction_time, int quantity, QStr
 
 void sqlParser::createTables()
 {
-    QString query = "CREATE TABLE items ("
+    QString query = "CREATE TABLE IF NOT EXISTS items ("
                     "name TEXT PRIMARY KEY,"
                     "icon BLOB,"
                     "recipe_list TEXT);";
@@ -89,7 +97,7 @@ void sqlParser::createTables()
         qDebug() << "error creating table\n" << qry.lastError();
     }
 
-    query = "CREATE TABLE machines ("
+    query = "CREATE TABLE IF NOT EXISTS machines ("
             "name TEXT PRIMARY KEY,"
             "icon BLOB,"
             "build_cost TEXT,"
@@ -100,7 +108,7 @@ void sqlParser::createTables()
         qDebug() << "error creating table\n" << qry.lastError();
     }
 
-    query = "CREATE TABLE recipes ("
+    query = "CREATE TABLE IF NOT EXISTS recipes ("
             "name TEXT PRIMARY KEY,"
             "poduction_time REAL,"
             "quantity INTEGER,"
@@ -119,6 +127,8 @@ void sqlParser::createTables()
 // than just parse from a complete Content Package
 void sqlParser::parseFromContentPack(ContentPackage *contentPack)
 {
+    // byte array for icon storage
+    // buffer for byte array writing
     QByteArray byteArray;
     QBuffer buffer(&byteArray);
     buffer.open(QIODevice::WriteOnly);
@@ -195,3 +205,96 @@ void sqlParser::parseFromFile(QFile *file)
     content.refill(file);
     parseFromContentPack(&content);
 }
+
+int sqlParser::fillContentPack(ContentPackage *contentPack, int fillMode, QString DBName)
+{
+    QImage icon;
+
+    // setting content pack filling mode
+    switch (fillMode) {
+    case CPExtend:
+        break;
+    case CPNew:
+        contentPack->items.clear();
+        contentPack->machines.clear();
+    default:
+        qDebug() << "fillContentPack: Chosen fill mode does not exit!\n";
+        return 1;
+    }
+    // changing data base if needed
+    if (DBName != dataBaseName) {
+        if (dbInitialazer(DBName)) {
+            qDebug() << "fillContentPack: Failed initializing new data base\n";
+            return 2;
+        }
+    }
+    //filling recipes and machines
+    QSqlQuery qry;
+    qry.prepare("SELECT * FROM recipes JOIN machines ON machines.name = recipes.machine_name");
+
+    if(!qry.exec()) {
+        qDebug() << "fillContentPack: " << qry.lastError();
+        return 3;
+    }
+
+
+    while (qry.next()) {
+        QString    recipe_name               = qry.value(0).toString();
+        double     recipe_production_time    = qry.value(1).toDouble();
+        int        recipe_quantity           = qry.value(2).toInt();
+        QString    recipe_ingredients        = qry.value(3).toString();
+        QString    machine_name              = qry.value(5).toString();
+        QByteArray machine_icon_byteArr      = qry.value(6).toByteArray();
+        QString    machine_buid_cost         = qry.value(7).toString();
+        int        machine_volume            = qry.value(8).toInt();
+        int        machine_power_consunption = qry.value(9).toInt();
+
+        // converting QByteArray to QImage
+        if(!icon.loadFromData(machine_icon_byteArr, "PNG"))
+            qDebug()<<"Image was not loaded";
+
+        // .....
+    }
+
+    //filling items
+    qry.prepare("SELECT * FROM items");
+
+    if(!qry.exec()) {
+        qDebug() << "fillContentPack: " << qry.lastError();
+        return 3;
+    }
+
+
+    while (qry.next()) {
+        QString    item_name         = qry.value(0).toString();
+        QByteArray item_icon_byteArr = qry.value(1).toByteArray();
+        QString    item_recipe_list  = qry.value(2).toString();
+
+        // converting QByteArray to QImage
+        if(!icon.loadFromData(item_icon_byteArr, "PNG"))
+            qDebug()<<"Image was not loaded";
+
+        // .....
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
