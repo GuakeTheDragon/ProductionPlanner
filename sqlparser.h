@@ -26,11 +26,11 @@ public:
 
     sqlParser();
 
-    void addItem(QString name, QByteArray byteArray, QString recipe_list);
+    void addItem(QString name, QByteArray byteArray);
 
     void addMachine(QString name, QByteArray img, QString build_cost, int volume, int power_consumption);
 
-    void addRecipe(QString name, float poduction_time, int quantity, QString ingredients, QString machine_name);
+    void addRecipe(QString name, float poduction_time, int quantity, QString ingredients, double recipe_cost, QString machine_name, QString item_name);
 
     void createTables();
 

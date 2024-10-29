@@ -23,18 +23,16 @@ int sqlParser::dbInitialazer(QString DBName)
     return 0;
 }
 
-void sqlParser::addItem(QString name, QByteArray img, QString recipe_list)
+void sqlParser::addItem(QString name, QByteArray img)
 {
     QSqlQuery qry;
 
     qry.prepare("INSERT INTO items ("
                 "name,"
-                "icon,"
-                "recipe_list)"
-                "VALUES (:name, :icon, :recipe_list);");
+                "icon)"
+                "VALUES (:name, :icon);");
     qry.bindValue(":name", name);
     qry.bindValue(":icon", img);
-    qry.bindValue(":recipelist", recipe_list);
 
     if(!qry.exec()) {
         qDebug() << "addItem: " << qry.lastError();
@@ -63,7 +61,7 @@ void sqlParser::addMachine(QString name, QByteArray img, QString build_cost, int
     }
 }
 
-void sqlParser::addRecipe(QString name, float poduction_time, int quantity, QString ingredients, QString machine_name)
+void sqlParser::addRecipe(QString name, float poduction_time, int quantity, QString ingredients, double recipe_cost, QString machine_name, QString item_name)
 {
     QSqlQuery qry;
 
@@ -72,13 +70,17 @@ void sqlParser::addRecipe(QString name, float poduction_time, int quantity, QStr
                 "poduction_time,"
                 "quantity,"
                 "ingredients,"
-                "machine_name)"
-                "VALUES (:name, :production_time, :quantity, :ingredients, :machine_name);");
+                "recipe_cost,"
+                "machine_name,"
+                "item_name)"
+                "VALUES (:name, :production_time, :quantity, :ingredients, :recipe_cost, :machine_name, :item_name);");
     qry.bindValue(":name", name);
     qry.bindValue(":production_time", poduction_time);
     qry.bindValue(":quantity", quantity);
     qry.bindValue(":ingredients" ,ingredients);
+    qry.bindValue(":recipe_cost", recipe_cost);
     qry.bindValue(":machine_name", machine_name);
+    qry.bindValue(":item_name", item_name);
 
     if(!qry.exec()) {
         qDebug() << "addRecipe: " << qry.lastError();
@@ -89,8 +91,7 @@ void sqlParser::createTables()
 {
     QString query = "CREATE TABLE IF NOT EXISTS items ("
                     "name TEXT PRIMARY KEY,"
-                    "icon BLOB,"
-                    "recipe_list TEXT);";
+                    "icon BLOB);";
     QSqlQuery qry;
 
     if(!qry.exec(query)) {
@@ -113,8 +114,11 @@ void sqlParser::createTables()
             "poduction_time REAL,"
             "quantity INTEGER,"
             "ingredients TEXT,"
+            "recipe_cost REAL,"
             "machine_name TEXT,"
-            "FOREIGN KEY(machine_name) REFERENCES machines(name));";
+            "item_name TEXT,"
+            "FOREIGN KEY(machine_name) REFERENCES machines(name),"
+            "FOREIGN KEY(item_name) REFERENCES items(name));";
 
     if(!qry.exec(query)) {
         qDebug() << "error creating table\n" << qry.lastError();
@@ -151,8 +155,7 @@ void sqlParser::parseFromContentPack(ContentPackage *contentPack)
     // adding Items (not yet)
     for (int item_i = 0; item_i < contentPack->items.count(); item_i++)
     {
-        Item* itemRef = contentPack->items[item_i];         // for readability
-        QString recipes = "";                               // for adding recipe list into SQLite
+        Item* itemRef = contentPack->items[item_i];         // for readability                              // for adding recipe list into SQLite
         // adding recipes (not yet)
         // due to how we read content of a ContentPackage
         for (int recipe_i = 0; recipe_i < itemRef->recipes.count(); recipe_i++)
@@ -172,17 +175,16 @@ void sqlParser::parseFromContentPack(ContentPackage *contentPack)
                 recipeRef->time,
                 recipeRef->quantity,
                 ingredients,
-                recipeRef->machine->name
+                recipeRef->resCost,
+                recipeRef->machine->name,
+                itemRef->name
             );
-            recipes += recipeRef->name;
-            recipes += "\t";
         }
         // adding items NOW
         itemRef->img.save(&buffer, "PNG");
         addItem(
             itemRef->name,
-            byteArray,
-            recipes
+            byteArray
         );
         buffer.reset();
         byteArray.clear();
@@ -209,8 +211,7 @@ void sqlParser::parseFromFile(QFile *file)
 int sqlParser::fillContentPack(ContentPackage *contentPack, int fillMode, QString DBName)
 {
     QImage icon;
-
-    // setting content pack filling mode
+                                                                            // setting content pack filling mode
     switch (fillMode) {
     case CPExtend:
         break;
@@ -221,60 +222,84 @@ int sqlParser::fillContentPack(ContentPackage *contentPack, int fillMode, QStrin
         qDebug() << "fillContentPack: Chosen fill mode does not exit!\n";
         return 1;
     }
-    // changing data base if needed
+                                                                            // changing data base if needed
     if (DBName != dataBaseName) {
         if (dbInitialazer(DBName)) {
             qDebug() << "fillContentPack: Failed initializing new data base\n";
             return 2;
         }
     }
-    //filling recipes and machines
+                                                                            //filling content package
     QSqlQuery qry;
-    qry.prepare("SELECT * FROM recipes JOIN machines ON machines.name = recipes.machine_name");
+    qry.prepare("SELECT * FROM recipes JOIN machines ON machines.name = recipes.machine_name JOIN items ON item.name = recipe.item_name");
 
     if(!qry.exec()) {
         qDebug() << "fillContentPack: " << qry.lastError();
         return 3;
     }
-
 
     while (qry.next()) {
         QString    recipe_name               = qry.value(0).toString();
         double     recipe_production_time    = qry.value(1).toDouble();
         int        recipe_quantity           = qry.value(2).toInt();
         QString    recipe_ingredients        = qry.value(3).toString();
-        QString    machine_name              = qry.value(5).toString();
-        QByteArray machine_icon_byteArr      = qry.value(6).toByteArray();
-        QString    machine_buid_cost         = qry.value(7).toString();
-        int        machine_volume            = qry.value(8).toInt();
-        int        machine_power_consunption = qry.value(9).toInt();
+        double     recipe_cost               = qry.value(4).toDouble();
+        QString    machine_name              = qry.value(7).toString();
+        QByteArray machine_icon_byteArr      = qry.value(8).toByteArray();
+        QString    machine_buid_cost         = qry.value(9).toString();     //should
+        int        machine_volume            = qry.value(10).toInt();       //  add more
+        int        machine_power_consunption = qry.value(11).toInt();       //     constructors
+        QString    item_name                 = qry.value(12).toString();
+        QByteArray item_icon_byteArr         = qry.value(13).toByteArray();
 
-        // converting QByteArray to QImage
-        if(!icon.loadFromData(machine_icon_byteArr, "PNG"))
+
+        // creating
+        Item *item;
+        Recipe *recipe;
+        Machine *machine;
+
+        foreach(item, contentPack->items) {
+            if(item->name == item_name) {
+                goto item_creation_end;                                   // if item exists, new item creation skipped
+            }
+        }
+        if(!icon.loadFromData(item_icon_byteArr, "PNG"))                  // converting QByteArray Item icon to QImage
             qDebug()<<"Image was not loaded";
+        item = new Item(item_name, icon);
+        contentPack->items.push_back(item);
 
-        // .....
-    }
+item_creation_end:
 
-    //filling items
-    qry.prepare("SELECT * FROM items");
-
-    if(!qry.exec()) {
-        qDebug() << "fillContentPack: " << qry.lastError();
-        return 3;
-    }
-
-
-    while (qry.next()) {
-        QString    item_name         = qry.value(0).toString();
-        QByteArray item_icon_byteArr = qry.value(1).toByteArray();
-        QString    item_recipe_list  = qry.value(2).toString();
-
-        // converting QByteArray to QImage
-        if(!icon.loadFromData(item_icon_byteArr, "PNG"))
+        foreach(machine, contentPack->machines) {
+            if(machine->name == machine_name) {
+                goto machine_creation_end;                                // if machine exists, new machine creation skipped
+            }
+        }
+        if(!icon.loadFromData(item_icon_byteArr, "PNG"))                  // converting QByteArray Machine icon to QImage
             qDebug()<<"Image was not loaded";
+        machine = new Machine(machine_name, icon);
+        contentPack->machines.push_back(machine);
 
-        // .....
+machine_creation_end:
+                                                                          // several of machine values are in recipe class for some reason?????????
+        recipe = new Recipe(recipe_name, machine, recipe_quantity, recipe_production_time, machine_power_consunption, recipe_cost);
+
+        /*
+            here must be recipe_ingredients string parser and recipe ingredients list filler
+
+            somthing like this:
+
+            while(<condition for substr>) {
+                foreach(item, contentPack->items) {
+                    if(item->name == <ingredient_substr_name>) {
+                        recipe->ingredients.push_back(Ingredient(item, <ingredient_substr_quantity>));
+                    }
+                }
+            }
+
+        */
+
+        item->recipes.push_back(recipe);
     }
 }
 
