@@ -218,6 +218,7 @@ int sqlParser::fillContentPack(ContentPackage *contentPack, int fillMode, QStrin
     case CPNew:
         contentPack->items.clear();
         contentPack->machines.clear();
+        break;
     default:
         qDebug() << "fillContentPack: Chosen fill mode does not exit!\n";
         return 1;
@@ -231,7 +232,38 @@ int sqlParser::fillContentPack(ContentPackage *contentPack, int fillMode, QStrin
     }
                                                                             //filling content package
     QSqlQuery qry;
-    qry.prepare("SELECT * FROM recipes JOIN machines ON machines.name = recipes.machine_name JOIN items ON items.name = recipes.item_name");
+
+
+    qry.prepare("SELECT * FROM items");
+
+    if(!qry.exec()) {
+        qDebug() << "fillContentPack: " << qry.lastError();
+        return 3;
+    }
+    while (qry.next()) {
+        QString    item_name                 = qry.value(0).toString();
+        QByteArray item_icon_byteArr         = qry.value(1).toByteArray();
+
+        if(!icon.loadFromData(item_icon_byteArr, "PNG"))                  // converting QByteArray Item icon to QImage
+            qDebug()<<"Image was not loaded";
+        Item *item = new Item(item_name, icon);
+        contentPack->items.push_back(item);
+    }
+
+    while (qry.next()) {
+        QString    machine_name              = qry.value(0).toString();
+        QByteArray machine_icon_byteArr      = qry.value(1).toByteArray();
+        QString    machine_buid_cost         = qry.value(2).toString();    //should
+        int        machine_volume            = qry.value(3).toInt();       //  add more
+        int        machine_power_consunption = qry.value(4).toInt();       //     constructors
+
+        if(!icon.loadFromData(machine_icon_byteArr, "PNG"))                  // converting QByteArray Machine icon to QImage
+            qDebug()<<"Image was not loaded";
+        Machine *machine = new Machine(machine_name, icon);
+        contentPack->machines.push_back(machine);
+    }
+
+    qry.prepare("SELECT * FROM recipes");
 
     if(!qry.exec()) {
         qDebug() << "fillContentPack: " << qry.lastError();
@@ -243,44 +275,11 @@ int sqlParser::fillContentPack(ContentPackage *contentPack, int fillMode, QStrin
         int        recipe_quantity           = qry.value(2).toInt();
         QString    recipe_ingredients        = qry.value(3).toString();
         double     recipe_cost               = qry.value(4).toDouble();
-        QString    machine_name              = qry.value(7).toString();
-        QByteArray machine_icon_byteArr      = qry.value(8).toByteArray();
-        QString    machine_buid_cost         = qry.value(9).toString();     //should
-        int        machine_volume            = qry.value(10).toInt();       //  add more
-        int        machine_power_consunption = qry.value(11).toInt();       //     constructors
-        QString    item_name                 = qry.value(12).toString();
-        QByteArray item_icon_byteArr         = qry.value(13).toByteArray();
+        QString    item_name                 = qry.value(5).toString();
+        QString    machine_name              = qry.value(6).toByteArray();
 
-        // creating
-        Item *item;
-        Recipe *recipe;
-        Machine *machine;
-
-        foreach(item, contentPack->items) {
-            if(item->name == item_name) {
-                goto item_creation_end;                                   // if item exists, new item creation skipped
-            }
-        }
-        if(!icon.loadFromData(item_icon_byteArr, "PNG"))                  // converting QByteArray Item icon to QImage
-            qDebug()<<"Image was not loaded";
-        item = new Item(item_name, icon);
-        contentPack->items.push_back(item);
-
-item_creation_end:
-
-        foreach(machine, contentPack->machines) {
-            if(machine->name == machine_name) {
-                goto machine_creation_end;                                // if machine exists, new machine creation skipped
-            }
-        }
-        if(!icon.loadFromData(item_icon_byteArr, "PNG"))                  // converting QByteArray Machine icon to QImage
-            qDebug()<<"Image was not loaded";
-        machine = new Machine(machine_name, icon);
-        contentPack->machines.push_back(machine);
-
-machine_creation_end:
                                                                           // several of machine values are in recipe class for some reason?????????
-        recipe = new Recipe(recipe_name, machine, recipe_quantity, recipe_production_time, machine_power_consunption, recipe_cost);
+        Recipe *recipe = new Recipe();
 
         /*
             here must be recipe_ingredients string parser and recipe ingredients list filler
@@ -295,9 +294,8 @@ machine_creation_end:
                 }
             }
 
-        */
 
-        item->recipes.push_back(recipe);
+        */
     }
     return 0;
 }
