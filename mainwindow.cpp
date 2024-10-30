@@ -31,14 +31,8 @@ MainWindow::MainWindow(QWidget *parent)
     qApp->setStyleSheet(qssStr);
 */
 
-    ContentPackage *baseContent = new ContentPackage();
-    QFile file;
-    file.setFileName(":/source/modules/vanilla/ContentPack.txt");
-    file.open(QFile::ReadOnly);
-    //if(!file.isOpen())  {
-    //    qDebug() << "Error opening content pack\n" << styleF.error();
-    //}
-    baseContent->refill(&file);
+    ContentPackage *baseContent = get_base_content_pack();
+
 
     itemList = new Modules();
     recipeList = new RecipeList();
@@ -57,13 +51,6 @@ MainWindow::MainWindow(QWidget *parent)
         itemList->swapItemInclusion(itemList->index(i, 0));
     }
     proxy->sort(0);
-
-    fill_BD_content_package(baseContent);
-
-
-
-
-
 }
 
 MainWindow::~MainWindow()
@@ -76,10 +63,16 @@ void MainWindow::fill_BD_content_package(ContentPackage *contentPack)
     sqlParser fileParser;
     fileParser.createTables();
     fileParser.parseFromContentPack(contentPack);
+}
 
+ContentPackage *MainWindow::get_base_content_pack()
+{
+    sqlParser contentPackParser;
     // Creating test content pack and fill it with new function
-    ContentPackage *cp = new ContentPackage;
-    fileParser.fillContentPack(cp);
+    ContentPackage *contentPack = new ContentPackage();
+    contentPackParser.fillContentPack(contentPack);
+
+    return contentPack;
 }
 
 void MainWindow::on_startButton_clicked()

@@ -208,37 +208,16 @@ void sqlParser::parseFromFile(QFile *file)
     parseFromContentPack(&content);
 }
 
-int sqlParser::fillContentPack(ContentPackage *contentPack, int fillMode, QString DBName)
+bool sqlParser::fillItems(ContentPackage *contentPack)
 {
     QImage icon;
-                                                                            // setting content pack filling mode
-    switch (fillMode) {
-    case CPExtend:
-        break;
-    case CPNew:
-        contentPack->items.clear();
-        contentPack->machines.clear();
-        break;
-    default:
-        qDebug() << "fillContentPack: Chosen fill mode does not exit!\n";
-        return 1;
-    }
-                                                                            // changing data base if needed
-    if (DBName != dataBaseName) {
-        if (dbInitialazer(DBName)) {
-            qDebug() << "fillContentPack: Failed initializing new data base\n";
-            return 2;
-        }
-    }
-                                                                            //filling content package
     QSqlQuery qry;
-
 
     qry.prepare("SELECT * FROM items");
 
     if(!qry.exec()) {
-        qDebug() << "fillContentPack: " << qry.lastError();
-        return 3;
+        qDebug() << "fillCoptentPack: fillItems. " << qry.lastError();
+        return true;
     }
     while (qry.next()) {
         QString    item_name                 = qry.value(0).toString();
@@ -250,6 +229,20 @@ int sqlParser::fillContentPack(ContentPackage *contentPack, int fillMode, QStrin
         contentPack->items.push_back(item);
     }
 
+    return false;
+}
+
+bool sqlParser::fillMachines(ContentPackage *contentPack)
+{
+    QImage icon;
+    QSqlQuery qry;
+
+    qry.prepare("SELECT * FROM machines");
+
+    if(!qry.exec()) {
+        qDebug() << "fillCoptentPack: fillMachines. " << qry.lastError();
+        return true;
+    }
     while (qry.next()) {
         QString    machine_name              = qry.value(0).toString();
         QByteArray machine_icon_byteArr      = qry.value(1).toByteArray();
@@ -259,44 +252,99 @@ int sqlParser::fillContentPack(ContentPackage *contentPack, int fillMode, QStrin
 
         if(!icon.loadFromData(machine_icon_byteArr, "PNG"))                  // converting QByteArray Machine icon to QImage
             qDebug()<<"Image was not loaded";
-        Machine *machine = new Machine(machine_name, icon);
+        Machine *machine = new Machine(machine_name, icon, machine_power_consunption);
         contentPack->machines.push_back(machine);
     }
+
+    return false;
+}
+
+bool sqlParser::fillRecipes(ContentPackage *contentPack)
+{
+    QSqlQuery qry;
 
     qry.prepare("SELECT * FROM recipes");
 
     if(!qry.exec()) {
-        qDebug() << "fillContentPack: " << qry.lastError();
-        return 3;
+        qDebug() << "fillContentPack: fillRecipes. " << qry.lastError();
+        return true;
     }
     while (qry.next()) {
-        QString    recipe_name               = qry.value(0).toString();     
+        QString    recipe_name               = qry.value(0).toString();
         double     recipe_production_time    = qry.value(1).toDouble();
         int        recipe_quantity           = qry.value(2).toInt();
         QString    recipe_ingredients        = qry.value(3).toString();
         double     recipe_cost               = qry.value(4).toDouble();
-        QString    item_name                 = qry.value(5).toString();
-        QString    machine_name              = qry.value(6).toByteArray();
+        QString    machine_name              = qry.value(5).toString();
+        QString    item_name                 = qry.value(6).toByteArray();
 
-                                                                          // several of machine values are in recipe class for some reason?????????
-        Recipe *recipe = new Recipe();
+        Machine* machineRef = contentPack->findMachine(machine_name);
+        // several of machine values are in recipe class for some reason?????????
+        Recipe *recipe = new Recipe(
+            recipe_name,
+            machineRef,
+            recipe_quantity,
+            recipe_production_time,
+            machineRef->powerConsunption,
+            recipe_cost
+        );
 
-        /*
-            here must be recipe_ingredients string parser and recipe ingredients list filler
+        QString temp = "";
+        while(recipe_ingredients != "") {
+            temp = recipe_ingredients.split('\t').at(0);
+            recipe_ingredients.erase(recipe_ingredients.begin(), recipe_ingredients.begin() + temp.size() + 1);
+            Ingredient *ingredient = new Ingredient (contentPack->findItem(temp), 0);
+            temp = recipe_ingredients.split('\t').at(0);
+            recipe_ingredients.erase(recipe_ingredients.begin(), recipe_ingredients.begin() + temp.size() + 1);
+            ingredient->quantity = temp.toInt();
+            recipe->ingredients.push_back(ingredient);
+        }
 
-            somthing like this:
-
-            while(<condition for substr>) {
-                foreach(item, contentPack->items) {
-                    if(item->name == <ingredient_substr_name>) {
-                        recipe->ingredients.push_back(Ingredient(item, <ingredient_substr_quantity>));
-                    }
-                }
-            }
-
-
-        */
+        contentPack->findItem(item_name)->recipes.push_back(recipe);
     }
+
+    return false;
+}
+
+int sqlParser::fillContentPack(ContentPackage *contentPack, int fillMode, QString DBName)
+{
+                                                            // setting content pack filling mode
+    switch (fillMode) {
+    case CPExtend:
+        break;
+    case CPNew:
+        contentPack->items.clear();
+        contentPack->machines.clear();
+        break;
+    default:
+        qDebug() << "fillContentPack: Chosen fill mode does not exit!\n";
+        return 1;
+    }
+                                                            // changing data base if needed
+    if (DBName != dataBaseName) {
+        if (dbInitialazer(DBName)) {
+            qDebug() << "fillContentPack: Failed initializing new data base\n";
+            return 2;
+        }
+    }
+                                                            // filling content package
+
+    if (fillItems(contentPack))
+    {
+        qDebug() << "fillCoptentPack: fillItems error.";
+        return 3;
+    }
+    if (fillMachines(contentPack))
+    {
+        qDebug() << "fillCoptentPack: fillMachines error.";
+        return 4;
+    }
+    if (fillRecipes(contentPack))
+    {
+        qDebug() << "fillCoptentPack: fillRecipes error.";
+        return 5;
+    }
+
     return 0;
 }
 

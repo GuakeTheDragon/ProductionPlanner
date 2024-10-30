@@ -23,6 +23,8 @@ public:
 
     void fill_BD_content_package(ContentPackage *contentPack);
 
+    ContentPackage *get_base_content_pack();
+
 private slots:
     void on_startButton_clicked();
 

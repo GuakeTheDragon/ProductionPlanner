@@ -15,7 +15,7 @@ class sqlParser
 
     QSqlDatabase dataBase;
 
-    QString dataBaseName = "myDb.sqlite";
+    QString dataBaseName = "baseContentPack.sqlite";
 
     int dbInitialazer(QString DBName);
 public:
@@ -38,7 +38,13 @@ public:
 
     void parseFromFile(QFile *file);
 
-    int fillContentPack(ContentPackage *contentPack, int fillMode = CPExtend, QString DBName = "myDb.sqlite");
+    bool fillItems(ContentPackage *contentPack);
+
+    bool fillMachines(ContentPackage *contentPack);
+
+    bool fillRecipes(ContentPackage *contentPack);
+
+    int fillContentPack(ContentPackage *contentPack, int fillMode = CPExtend, QString DBName = "baseContentPack.sqlite");
 
 };
 

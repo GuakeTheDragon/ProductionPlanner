@@ -27,10 +27,19 @@ class Machine
 public:
     QString name;                       // Name of the machine.
     QImage img;                         // Image shown in the program.
+    int powerConsunption;
     QList<Ingredient*> buildingCost;    // (WIP) Amount of ingredients used to build the machine.
 
     Machine(): name("Unidentified"), img(":/source/img/StockSearchIcon.png"), buildingCost(){};
-    Machine(QString n, QImage i): name(n), img(i), buildingCost() {};
+    Machine(
+        QString name,
+        QImage image,
+        int powerConsunption
+    ):
+        name(name),
+        img(image),
+        powerConsunption(powerConsunption),
+        buildingCost() {};
     ~Machine(){};
 };
 
@@ -49,7 +58,22 @@ public:
     QList<Ingredient*> excess;              // Excess/Additional items made by the RECIPE.
 
     Recipe(): name("A recipe"), machine(), quantity(0), time(0), powerConsuption(0), resCost(0), ingredients() {};
-    Recipe(QString n, Machine* m, float q, double t, double pC, double rC): name(n), machine(m), quantity(q), time(t), powerConsuption(pC), resCost(rC), ingredients(), excess() {};
+    Recipe(
+        QString name,
+        Machine* machine,
+        float quantity,
+        double time,
+        double powerConsuption,
+        double resCost
+    ):
+        name(name),
+        machine(machine),
+        quantity(quantity),
+        time(time),
+        powerConsuption(powerConsuption),
+        resCost(resCost),
+        ingredients(),
+        excess() {};
     ~Recipe(){};
 
     void setInclusion(int i);               // Is the RECIPE used in calculations? Yes/No
@@ -65,7 +89,7 @@ public:
     QList<Recipe*> recipes;     // Recipes used to MAKE the ITEM
 
     Item(): name("An item"), img(":/source/img/StockSearchIcon.png"), recipes(){};
-    Item(QString n, QImage i): name(n), img(i), recipes(){};
+    Item(QString name, QImage image): name(name), img(image), recipes(){};
     ~Item(){};
 
     void setInclusion(int i);   // Include/Exclude? yes/no

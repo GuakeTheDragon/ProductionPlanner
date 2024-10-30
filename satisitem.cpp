@@ -160,7 +160,7 @@ bool ContentPackage::refill(QFile *file)
     while (fileOutput != "%$")          // Adding machines
     {
         prepareStr(&img, file);
-        this->machines.append(new Machine(fileOutput, QImage(QString(":/source/modules/vanilla/machines/%1").arg(img))));
+        this->machines.append(new Machine(fileOutput, QImage(QString(":/source/modules/vanilla/machines/%1").arg(img)), 0));
         prepareStr(&fileOutput, file);
     }
     prepareStr(&fileOutput, file);
