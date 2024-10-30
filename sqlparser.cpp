@@ -27,7 +27,7 @@ void sqlParser::addItem(QString name, QByteArray img)
 {
     QSqlQuery qry;
 
-    qry.prepare("INSERT INTO items ("
+    qry.prepare("INSERT OR REPLACE INTO items ("
                 "name,"
                 "icon)"
                 "VALUES (:name, :icon);");
@@ -43,7 +43,7 @@ void sqlParser::addMachine(QString name, QByteArray img, QString build_cost, int
 {
     QSqlQuery qry;
 
-    qry.prepare("INSERT INTO machines ("
+    qry.prepare("INSERT OR REPLACE INTO machines ("
                 "name,"
                 "icon,"
                 "build_cost,"
@@ -231,15 +231,14 @@ int sqlParser::fillContentPack(ContentPackage *contentPack, int fillMode, QStrin
     }
                                                                             //filling content package
     QSqlQuery qry;
-    qry.prepare("SELECT * FROM recipes JOIN machines ON machines.name = recipes.machine_name JOIN items ON item.name = recipe.item_name");
+    qry.prepare("SELECT * FROM recipes JOIN machines ON machines.name = recipes.machine_name JOIN items ON items.name = recipes.item_name");
 
     if(!qry.exec()) {
         qDebug() << "fillContentPack: " << qry.lastError();
         return 3;
     }
-
     while (qry.next()) {
-        QString    recipe_name               = qry.value(0).toString();
+        QString    recipe_name               = qry.value(0).toString();     
         double     recipe_production_time    = qry.value(1).toDouble();
         int        recipe_quantity           = qry.value(2).toInt();
         QString    recipe_ingredients        = qry.value(3).toString();
@@ -251,7 +250,6 @@ int sqlParser::fillContentPack(ContentPackage *contentPack, int fillMode, QStrin
         int        machine_power_consunption = qry.value(11).toInt();       //     constructors
         QString    item_name                 = qry.value(12).toString();
         QByteArray item_icon_byteArr         = qry.value(13).toByteArray();
-
 
         // creating
         Item *item;
@@ -301,6 +299,7 @@ machine_creation_end:
 
         item->recipes.push_back(recipe);
     }
+    return 0;
 }
 
 

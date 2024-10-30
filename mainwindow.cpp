@@ -60,6 +60,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     fill_BD_content_package(baseContent);
 
+
+
+
+
 }
 
 MainWindow::~MainWindow()
@@ -69,11 +73,15 @@ MainWindow::~MainWindow()
 
 void MainWindow::fill_BD_content_package(ContentPackage *contentPack)
 {
+    int j = 1;
     sqlParser fileParser;
-
     fileParser.createTables();
-
     fileParser.parseFromContentPack(contentPack);
+
+    // Creating test content pack and fill it with new function
+    ContentPackage *cp = new ContentPackage;
+    fileParser.fillContentPack(cp);
+
 }
 
 void MainWindow::on_startButton_clicked()
