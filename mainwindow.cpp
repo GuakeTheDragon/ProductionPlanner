@@ -31,7 +31,17 @@ MainWindow::MainWindow(QWidget *parent)
     qApp->setStyleSheet(qssStr);
 */
 
+
+    sqlParser parser;
+
+    parser.createTables();
+    QFile *file = new QFile(":/source/modules/vanilla/ContentPack.txt");
+    file->open(QFile::ReadOnly);
+
+    parser.parseFromFile(file);
+
     ContentPackage *baseContent = get_base_content_pack();
+
 
 
     itemList = new Modules();

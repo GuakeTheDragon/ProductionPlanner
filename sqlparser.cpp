@@ -23,6 +23,44 @@ int sqlParser::dbInitialazer(QString DBName)
     return 0;
 }
 
+void sqlParser::createTables()
+{
+    QString query = "CREATE TABLE IF NOT EXISTS items ("
+                    "name TEXT PRIMARY KEY,"
+                    "icon BLOB);";
+    QSqlQuery qry;
+
+    if(!qry.exec(query)) {
+        qDebug() << "error creating table\n" << qry.lastError();
+    }
+
+    query = "CREATE TABLE IF NOT EXISTS machines ("
+            "name TEXT PRIMARY KEY,"
+            "icon BLOB,"
+            "build_cost TEXT,"
+            "volume INTEGER,"
+            "power_consumption INTEGER);";
+
+    if(!qry.exec(query)) {
+        qDebug() << "error creating table\n" << qry.lastError();
+    }
+
+    query = "CREATE TABLE IF NOT EXISTS recipes ("
+            "name TEXT PRIMARY KEY,"
+            "poduction_time REAL,"
+            "quantity INTEGER,"
+            "ingredients TEXT,"
+            "recipe_cost REAL,"
+            "machine_name TEXT,"
+            "item_name TEXT,"
+            "FOREIGN KEY(machine_name) REFERENCES machines(name),"
+            "FOREIGN KEY(item_name) REFERENCES items(name));";
+
+    if(!qry.exec(query)) {
+        qDebug() << "error creating table\n" << qry.lastError();
+    }
+}
+
 void sqlParser::addItem(QString name, QByteArray img)
 {
     QSqlQuery qry;
@@ -84,44 +122,6 @@ void sqlParser::addRecipe(QString name, float poduction_time, int quantity, QStr
 
     if(!qry.exec()) {
         qDebug() << "addRecipe: " << qry.lastError();
-    }
-}
-
-void sqlParser::createTables()
-{
-    QString query = "CREATE TABLE IF NOT EXISTS items ("
-                    "name TEXT PRIMARY KEY,"
-                    "icon BLOB);";
-    QSqlQuery qry;
-
-    if(!qry.exec(query)) {
-        qDebug() << "error creating table\n" << qry.lastError();
-    }
-
-    query = "CREATE TABLE IF NOT EXISTS machines ("
-            "name TEXT PRIMARY KEY,"
-            "icon BLOB,"
-            "build_cost TEXT,"
-            "volume INTEGER,"
-            "power_consumption INTEGER);";
-
-    if(!qry.exec(query)) {
-        qDebug() << "error creating table\n" << qry.lastError();
-    }
-
-    query = "CREATE TABLE IF NOT EXISTS recipes ("
-            "name TEXT PRIMARY KEY,"
-            "poduction_time REAL,"
-            "quantity INTEGER,"
-            "ingredients TEXT,"
-            "recipe_cost REAL,"
-            "machine_name TEXT,"
-            "item_name TEXT,"
-            "FOREIGN KEY(machine_name) REFERENCES machines(name),"
-            "FOREIGN KEY(item_name) REFERENCES items(name));";
-
-    if(!qry.exec(query)) {
-        qDebug() << "error creating table\n" << qry.lastError();
     }
 }
 
