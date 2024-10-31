@@ -43,9 +43,11 @@ public:
     ~Machine(){};
 };
 
+class ContentPackage;
 // Represents the way an Item is made
 class Recipe
 {
+    void prepareStr(QString *str, QFile *file);
 public:
     QString name;                           // Recipe has a name. Each item can have different recipes.
     Machine* machine;                       // The machine where the RECIPE is processed.
@@ -74,6 +76,16 @@ public:
         resCost(resCost),
         ingredients(),
         excess() {};
+//    Recipe(Recipe &copy):
+//        name(copy.name),
+//        machine(copy.machine),
+//        quantity(copy.quantity),
+//        time(copy.time),
+//        powerConsuption(copy.powerConsuption),
+//        resCost(copy.resCost),
+//        ingredients(),
+//        excess() {};
+    Recipe(QFile *file, ContentPackage *contentPack, QString *fileOutput);
     ~Recipe(){};
 
     void setInclusion(int i);               // Is the RECIPE used in calculations? Yes/No

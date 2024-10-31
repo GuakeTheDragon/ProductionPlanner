@@ -110,6 +110,24 @@ void AvailableModules::remove(const QModelIndex &index)
 }
 
 //FOR MODULES
+Recipe::Recipe(QFile *file, ContentPackage *contentPack, QString *fileOutput)
+{
+    name = *fileOutput;
+    prepareStr(fileOutput, file);
+    machine = contentPack->findMachine(*fileOutput);
+    prepareStr(fileOutput, file);
+    quantity = fileOutput->toFloat();
+    prepareStr(fileOutput, file);
+    time = fileOutput->toDouble();
+    prepareStr(fileOutput, file);
+    resCost = fileOutput->toDouble();
+}
+void Recipe::prepareStr(QString *str, QFile *file)
+{
+    *str = file->readLine();
+    str->remove('\n');
+    str->remove('\r');
+}
 void Recipe::setInclusion(int i)
 {
     if (i == 2)
@@ -184,18 +202,10 @@ bool ContentPackage::refill(QFile *file)
         }
         while (fileOutput != "%$")      // Adding recipes
         {
-            lastItem->recipes.append(new Recipe());
+            lastItem->recipes.append(new Recipe(file, this, &fileOutput));
             qDebug() << "Amount of recipes:     " << ++debugRecipes;        // amount of recipes
             Recipe* lastRecipe = lastItem->recipes.last();
-            lastRecipe->name = fileOutput;
-            prepareStr(&fileOutput, file);
-            lastRecipe->machine = this->findMachine(fileOutput);
-            prepareStr(&fileOutput, file);
-            lastRecipe->quantity = fileOutput.toFloat();
-            prepareStr(&fileOutput, file);
-            lastRecipe->time = fileOutput.toDouble();
-            prepareStr(&fileOutput, file);
-            lastRecipe->resCost = fileOutput.toDouble();
+
             prepareStr(&fileOutput, file);
             while (fileOutput != "%$")  // Adding excess
             {
@@ -205,19 +215,6 @@ bool ContentPackage::refill(QFile *file)
                 prepareStr(&fileOutput, file);
                 lastExcess->quantity = fileOutput.toFloat();
                 prepareStr(&fileOutput, file);
-
-                lastExcess->reference->recipes.append(new Recipe());
-                Recipe* lastExcessRecipe = lastExcess->reference->recipes.last();
-                lastExcessRecipe->name = lastRecipe->name;
-                lastExcessRecipe->machine = lastRecipe->machine;
-                lastExcessRecipe->quantity = lastExcess->quantity;
-                lastExcessRecipe->time = lastRecipe->time;
-                lastExcessRecipe->resCost = lastRecipe->resCost;
-
-                lastExcessRecipe->excess.append(new Ingredient());
-                lastExcessRecipe->excess.last()->reference = lastItem;
-                lastExcessRecipe->excess.last()->quantity = lastRecipe->quantity;
-
                 qDebug() << "New excess: " + lastItem->recipes.last()->excess.last()->reference->name;
             }
             prepareStr(&fileOutput, file);
@@ -247,14 +244,6 @@ bool ContentPackage::refill(QFile *file)
                     qDebug() << "New Ingredient: " + lastIngredient->reference->name;
                 else
                     qDebug() << "New Ingredient: " + UndefinedItems.last() + " / ! \\ UNDEFINED YET / ! \\";
-
-                if (lastItem->recipes.last()->excess.count())
-                {
-                    lastItem->recipes.last()->excess.last()->reference->recipes.last()->ingredients.append(new Ingredient());
-                    lastItem->recipes.last()->excess.last()->reference->recipes.last()->ingredients.last()->reference = lastIngredient->reference;
-                    lastItem->recipes.last()->excess.last()->reference->recipes.last()->ingredients.last()->quantity = lastIngredient->quantity;
-                    qDebug() << "New excess Ingredient: " + lastIngredient->reference->name;
-                }
             }
             prepareStr(&fileOutput, file);
         }

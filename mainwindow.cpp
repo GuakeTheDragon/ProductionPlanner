@@ -41,7 +41,8 @@ MainWindow::MainWindow(QWidget *parent)
     parser.parseFromFile(file);
 
     ContentPackage *baseContent = get_base_content_pack();
-
+    //    new ContentPackage();
+    //baseContent->refill(file);
 
 
     itemList = new Modules();

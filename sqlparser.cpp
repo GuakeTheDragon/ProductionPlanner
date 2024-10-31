@@ -103,7 +103,7 @@ void sqlParser::addRecipe(QString name, float poduction_time, int quantity, QStr
 {
     QSqlQuery qry;
 
-    qry.prepare("INSERT INTO recipes ("
+    qry.prepare("INSERT OR REPLACE INTO recipes ("
                 "name,"
                 "poduction_time,"
                 "quantity,"
