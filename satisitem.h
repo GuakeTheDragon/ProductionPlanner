@@ -8,6 +8,19 @@
 #include <QList>                // To use QLists of Qt
 #include <QFile>
 
+class DockableWidget : public QMainWindow
+{
+    Q_OBJECT
+
+public:
+    DockableWidget(QWidget *parent = 0, const char *name = 0);
+    ~DockableWidget();
+
+protected:
+    void closeEvent(QCloseEvent *event);
+    //void contextMenuEvent(QContextMenuEvent *event);
+};
+
 class Item;
 // Represents an individual part of each recipe
 class Ingredient

@@ -32,7 +32,7 @@
 #include <QtWidgets/QTreeWidget>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
-#include "mainwindow.h"
+#include <satisitem.h>
 
 QT_BEGIN_NAMESPACE
 
@@ -70,7 +70,7 @@ public:
     QLabel *itemListCount;
     QPushButton *itemListEdit;
     QTabWidget *tabWidget;
-    QWidget *tab;
+    DockableWidget *tab;
     QHBoxLayout *horizontalLayout_3;
     QListView *recipeView;
     QHBoxLayout *horizontalLayout_7;
@@ -89,7 +89,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(809, 535);
+        MainWindow->resize(1059, 628);
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/source/modules/vanilla/icons/QuantumComputer.png"), QSize(), QIcon::Normal, QIcon::Off);
         MainWindow->setWindowIcon(icon);
@@ -124,7 +124,7 @@ public:
         treeWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAsNeeded);
         treeWidget->setAlternatingRowColors(false);
         treeWidget->setIconSize(QSize(16, 16));
-        treeWidget->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+        treeWidget->setVerticalScrollMode(QAbstractItemView::ScrollPerItem);
         treeWidget->setIndentation(20);
         treeWidget->setRootIsDecorated(false);
         treeWidget->setUniformRowHeights(false);
@@ -149,7 +149,7 @@ public:
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 809, 21));
+        menubar->setGeometry(QRect(0, 0, 1059, 21));
         menuFile = new QMenu(menubar);
         menuFile->setObjectName("menuFile");
         menuHelp = new QMenu(menubar);
@@ -202,11 +202,11 @@ public:
 
         quantity = new QDoubleSpinBox(dockWidgetContents_5);
         quantity->setObjectName("quantity");
-        quantity->setFocusPolicy(Qt::WheelFocus);
+        quantity->setFocusPolicy(Qt::NoFocus);
         quantity->setStyleSheet(QString::fromUtf8(""));
         quantity->setWrapping(false);
         quantity->setFrame(true);
-        quantity->setButtonSymbols(QAbstractSpinBox::PlusMinus);
+        quantity->setButtonSymbols(QAbstractSpinBox::UpDownArrows);
         quantity->setAccelerated(true);
         quantity->setKeyboardTracking(true);
         quantity->setProperty("showGroupSeparator", QVariant(false));
@@ -227,7 +227,6 @@ public:
         lineEditImg->setStyleSheet(QString::fromUtf8(""));
         lineEditImg->setPixmap(QPixmap(QString::fromUtf8(":/source/img/StockSearchIcon.png")));
         lineEditImg->setScaledContents(true);
-        lineEditImg->setAlignment(Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter);
 
         horizontalLayout->addWidget(lineEditImg);
 
@@ -253,7 +252,6 @@ public:
         itemListCount->setMinimumSize(QSize(60, 0));
         itemListCount->setStyleSheet(QString::fromUtf8(""));
         itemListCount->setScaledContents(false);
-        itemListCount->setAlignment(Qt::AlignJustify|Qt::AlignVCenter);
 
         horizontalLayout_2->addWidget(itemListCount);
 
@@ -274,7 +272,7 @@ public:
         tabWidget = new QTabWidget(dockWidgetContents_5);
         tabWidget->setObjectName("tabWidget");
         tabWidget->setDocumentMode(true);
-        tab = new QWidget();
+        tab = new DockableWidget();
         tab->setObjectName("tab");
         horizontalLayout_3 = new QHBoxLayout(tab);
         horizontalLayout_3->setSpacing(0);
@@ -283,7 +281,6 @@ public:
         recipeView = new QListView(tab);
         recipeView->setObjectName("recipeView");
         recipeView->setFrameShape(QFrame::NoFrame);
-        recipeView->setFrameShadow(QFrame::Plain);
         recipeView->setLineWidth(0);
         recipeView->setSelectionRectVisible(false);
 
@@ -351,7 +348,7 @@ public:
         itemView = new QTableView(dockWidgetContents_2);
         itemView->setObjectName("itemView");
         itemView->setAlternatingRowColors(false);
-        itemView->setSelectionMode(QAbstractItemView::SingleSelection);
+        itemView->setSelectionMode(QAbstractItemView::NoSelection);
         itemView->setIconSize(QSize(0, 0));
         itemView->setShowGrid(false);
         itemView->setCornerButtonEnabled(false);

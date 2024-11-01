@@ -1,5 +1,18 @@
 #include "satisitem.h"
 
+DockableWidget::DockableWidget(QWidget *parent, const char *name)
+    : QMainWindow(parent)
+{
+    this->setObjectName(name);
+}
+DockableWidget::~DockableWidget()
+{
+
+}
+void DockableWidget::closeEvent(QCloseEvent *event)
+{
+
+}
 
 void AvailableMod::setType(QString str)
 {

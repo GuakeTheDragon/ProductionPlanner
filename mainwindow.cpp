@@ -12,15 +12,25 @@ MainWindow::MainWindow(QWidget *parent)
     menuBar()->setVisible(false);
     ui->startButton->setEnabled(false);
     ui->removeButton->setEnabled(false);
+    //appdata = getenv("APPDATA");
+    ui->tab->setCentralWidget(ui->recipeView);  // constructing configure area
+    ui->tab->addDockWidget(Qt::LeftDockWidgetArea, ui->dockWidget);
+    ui->tab->addDockWidget(Qt::RightDockWidgetArea, ui->dockWidget_2);
     ui->tabWidget->setStyleSheet("QTabBar::tab { border: none; margin: 0px; padding: 0px; height: 0px; width: 0px; }");
     ui->dockWidget->setTitleBarWidget(new QWidget());
     ui->dockWidget_2->setTitleBarWidget(new QWidget());
+
+    QFile styleF(":/qss/style.css");            // setup Source File
+    styleF.open(QFile::ReadOnly);
+    QString qssStr = styleF.readAll();          // setup Style Sheet File
+    qApp->setStyleSheet(qssStr);
 
     ui->dockWidget_3->setTitleBarWidget(new QWidget()); // constructing configure area
     ui->dockWidget_5->setTitleBarWidget(new QWidget()); // constructing configure area
 
     DescryptionStyle = "<p style=\" margin-top:0px; margin-bottom:0px;\">";
     DescryptionStyleTab = "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:10px\">";
+
 /*
     QFile styleF(":/qss/style.css");
     styleF.open(QFile::ReadOnly);           // setup Source File

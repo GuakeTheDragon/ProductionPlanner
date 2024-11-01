@@ -52,10 +52,10 @@
        </size>
       </property>
       <property name="focusPolicy">
-       <enum>Qt::FocusPolicy::NoFocus</enum>
+       <enum>Qt::NoFocus</enum>
       </property>
       <property name="horizontalScrollBarPolicy">
-       <enum>Qt::ScrollBarPolicy::ScrollBarAsNeeded</enum>
+       <enum>Qt::ScrollBarAsNeeded</enum>
       </property>
       <property name="alternatingRowColors">
        <bool>false</bool>
@@ -67,7 +67,7 @@
        </size>
       </property>
       <property name="verticalScrollMode">
-       <enum>QAbstractItemView::ScrollMode::ScrollPerPixel</enum>
+       <enum>QAbstractItemView::ScrollPerItem</enum>
       </property>
       <property name="indentation">
        <number>20</number>
@@ -148,7 +148,7 @@
      <x>0</x>
      <y>0</y>
      <width>1059</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -173,10 +173,10 @@
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QDockWidget" name="dockWidget_3">
    <property name="features">
-    <set>QDockWidget::DockWidgetFeature::NoDockWidgetFeatures</set>
+    <set>QDockWidget::NoDockWidgetFeatures</set>
    </property>
    <property name="allowedAreas">
-    <set>Qt::DockWidgetArea::NoDockWidgetArea</set>
+    <set>Qt::NoDockWidgetArea</set>
    </property>
    <attribute name="dockWidgetArea">
     <number>8</number>
@@ -219,10 +219,10 @@
   </widget>
   <widget class="QDockWidget" name="dockWidget_5">
    <property name="features">
-    <set>QDockWidget::DockWidgetFeature::NoDockWidgetFeatures</set>
+    <set>QDockWidget::NoDockWidgetFeatures</set>
    </property>
    <property name="allowedAreas">
-    <set>Qt::DockWidgetArea::NoDockWidgetArea</set>
+    <set>Qt::NoDockWidgetArea</set>
    </property>
    <attribute name="dockWidgetArea">
     <number>2</number>
@@ -262,7 +262,7 @@
        <item>
         <widget class="QDoubleSpinBox" name="quantity">
          <property name="focusPolicy">
-          <enum>Qt::FocusPolicy::WheelFocus</enum>
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true"/>
@@ -274,7 +274,7 @@
           <bool>true</bool>
          </property>
          <property name="buttonSymbols">
-          <enum>QAbstractSpinBox::ButtonSymbols::PlusMinus</enum>
+          <enum>QAbstractSpinBox::UpDownArrows</enum>
          </property>
          <property name="accelerated">
           <bool>true</bool>
@@ -322,9 +322,6 @@
          </property>
          <property name="scaledContents">
           <bool>true</bool>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
          </property>
         </widget>
        </item>
@@ -382,9 +379,6 @@
            <property name="scaledContents">
             <bool>false</bool>
            </property>
-           <property name="alignment">
-            <set>Qt::AlignmentFlag::AlignJustify|Qt::AlignmentFlag::AlignVCenter</set>
-           </property>
           </widget>
          </item>
          <item>
@@ -405,7 +399,7 @@
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="focusPolicy">
-            <enum>Qt::FocusPolicy::NoFocus</enum>
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="styleSheet">
             <string notr="true"/>
@@ -428,7 +422,7 @@
          <property name="documentMode">
           <bool>true</bool>
          </property>
-         <widget class="QWidget" name="tab">
+         <widget class="DockableWidget" name="tab">
           <attribute name="title">
            <string/>
           </attribute>
@@ -451,10 +445,7 @@
            <item>
             <widget class="QListView" name="recipeView">
              <property name="frameShape">
-              <enum>QFrame::Shape::NoFrame</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Shadow::Plain</enum>
+              <enum>QFrame::NoFrame</enum>
              </property>
              <property name="lineWidth">
               <number>0</number>
@@ -484,7 +475,7 @@
           <cursorShape>PointingHandCursor</cursorShape>
          </property>
          <property name="focusPolicy">
-          <enum>Qt::FocusPolicy::NoFocus</enum>
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true"/>
@@ -566,8 +557,8 @@ p, li { white-space: pre-wrap; }
 hr { height: 1px; border-width: 0; }
 li.unchecked::marker { content: &quot;\2610&quot;; }
 li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'JetBrains Mono'; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Segoe UI'; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>
@@ -601,7 +592,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <bool>false</bool>
        </property>
        <property name="selectionMode">
-        <enum>QAbstractItemView::SelectionMode::SingleSelection</enum>
+        <enum>QAbstractItemView::NoSelection</enum>
        </property>
        <property name="iconSize">
         <size>
@@ -678,6 +669,14 @@ li.checked::marker { content: &quot;\2612&quot;; }
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>DockableWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">satisitem.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="src.qrc"/>
  </resources>

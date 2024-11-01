@@ -156,5 +156,7 @@
         <file>modules/vanilla/machines/Waterpump.png</file>
         <file>howToUseSRC.txt</file>
     </qresource>
-    <qresource prefix="/qss"/>
+    <qresource prefix="/qss">
+        <file>style.css</file>
+    </qresource>
 </RCC>
