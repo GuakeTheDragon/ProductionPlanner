@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
     DescryptionStyle = "<p style=\" margin-top:0px; margin-bottom:0px;\">";
     DescryptionStyleTab = "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:10px\">";
 
-/*
+#ifdef QSS_SETUP
     QFile styleF(":/qss/style.css");
     styleF.open(QFile::ReadOnly);           // setup Source File
     if(!styleF.isOpen()) {
@@ -39,9 +39,9 @@ MainWindow::MainWindow(QWidget *parent)
     }
     QString qssStr = styleF.readAll();          // setup Style Sheet File
     qApp->setStyleSheet(qssStr);
-*/
+#endif
 
-
+#ifdef CONTENT_FILE_REFILL
     sqlParser parser;
 
     parser.createTables();
@@ -49,11 +49,9 @@ MainWindow::MainWindow(QWidget *parent)
     file->open(QFile::ReadOnly);
 
     parser.parseFromFile(file);
+#endif
 
     ContentPackage *baseContent = get_base_content_pack();
-    //    new ContentPackage();
-    //baseContent->refill(file);
-
 
     itemList = new Modules();
     recipeList = new RecipeList();

@@ -15,7 +15,6 @@ int sqlParser::dbInitialazer(QString DBName)
 
     dataBase = QSqlDatabase::addDatabase("QSQLITE");
     dataBase.setDatabaseName(DBName);
-
     if(!dataBase.open()) {
         qDebug() << "dataBase opening problem\n";
         return 1;
@@ -125,10 +124,6 @@ void sqlParser::addRecipe(QString name, float poduction_time, int quantity, QStr
     }
 }
 
-// a complex structure of HOW do items/ingredients refer to each other
-// it seems way too complicate to add a more suitable parsing function
-// from a .txt file
-// than just parse from a complete Content Package
 void sqlParser::parseFromContentPack(ContentPackage *contentPack)
 {
     // byte array for icon storage
@@ -191,16 +186,7 @@ void sqlParser::parseFromContentPack(ContentPackage *contentPack)
     }
 }
 
-// Obsolete code
-// Technically can be used
-// Practically won't be used (consider use parseFromContentPack() then)
-// ..simply because it's just creating temporary ContentPackage class, fill it and parse the class instead
-// HOWEVER not recomended to delete in case the programm REALLY will MUST to parse from FILES
-// (as stated above, parse from file is way harder (if not impossible) in case of how do SQLite work)
 
-// also consider Windows somewhy add /r/n in the end of .txt
-// meanwhile there are only /n on Linux
-// so probably it's a good idea to make a deletion of /r and /n by a search and not from removeLast()
 void sqlParser::parseFromFile(QFile *file)
 {
     ContentPackage content;
@@ -214,7 +200,7 @@ bool sqlParser::fillItems(ContentPackage *contentPack)
     QSqlQuery qry;
 
     qry.prepare("SELECT * FROM items");
-
+    qDebug()  << qry.lastError();
     if(!qry.exec()) {
         qDebug() << "fillCoptentPack: fillItems. " << qry.lastError();
         return true;
@@ -329,6 +315,7 @@ int sqlParser::fillContentPack(ContentPackage *contentPack, int fillMode, QStrin
     }
                                                             // filling content package
 
+    createTables();
     if (fillItems(contentPack))
     {
         qDebug() << "fillCoptentPack: fillItems error.";
